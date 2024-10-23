@@ -5,31 +5,87 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:gravity="center">
+    android:background="#fdf2d2">
 
-    <EditText
-        android:id="@+id/email"
+    <!-- Logo en la parte superior izquierda -->
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/logo"
+        android:layout_gravity="start"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Contenedor para centrar el texto -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Correo"
-        android:inputType="textEmailAddress" />
+        android:orientation="vertical"
+        android:gravity="center">
 
-    <EditText
-        android:id="@+id/password"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Correu"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Correu"
+            android:inputType="textEmailAddress"
+            android:layout_marginBottom="16dp"
+            android:padding="10dp"
+            android:background="@drawable/recuadro"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contrasenya"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contraseña"
+            android:inputType="textPassword"
+            android:layout_marginBottom="16dp"
+            android:padding="10dp"
+            android:background="@drawable/recuadro"/>
+
+    </LinearLayout>
+
+    <!-- Botones -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Contrasenya"
-        android:inputType="textPassword" />
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
 
-    <Button
-        android:id="@+id/login_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Iniciar sesión" />
+        <Button
+            android:id="@+id/enerere_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#FF9800"
+            android:textColor="#FFFFFF"
+            android:text="Enerere" />
 
-    <Button
-        android:id="@+id/register_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Crear cuenta nueva" />
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#FF9800"
+            android:textColor="#FFFFFF"
+            android:text="Iniciar sessió" />
+
+    </LinearLayout>
+
 </LinearLayout>
