@@ -13,20 +13,21 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 @Composable
-fun CartScreen(navController: NavController) {
-    val cart = remember { mutableStateListOf<Producto>() }
+fun CartScreen(navController: NavController, cart: MutableList<Producto>) {
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
         Text(
-            text = "Productos en la Cesta",
+            text = "Productes dins la cesta;",
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
         if (cart.isEmpty()) {
-            Text(text = "La cesta está vacía", modifier = Modifier.padding(16.dp))
+            Text(text = "VACIA", modifier = Modifier.padding(16.dp))
         } else {
             LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                modifier = Modifier.fillMaxSize()
+                columns = GridCells.Fixed(1),
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
             ) {
                 items(cart) { product ->
                     ProductItem(product = product, cart)
@@ -40,7 +41,7 @@ fun CartScreen(navController: NavController) {
                 .padding(16.dp)
                 .align(Alignment.CenterHorizontally)
         ) {
-            Text(text = "Volver al Menú")
+            Text(text = "Menú")
         }
     }
 }

@@ -3,7 +3,7 @@ package com.example.myapplication
 import retrofit2.http.GET
 
 interface Interface {
-    @GET("/getProd")
+    @GET("/preguntas")
     suspend fun getProductData(): List<Producto>
 }
 data class Producto(

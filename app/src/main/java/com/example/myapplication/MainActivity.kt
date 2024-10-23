@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -16,9 +18,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyApplicationTheme {
                 val navController = rememberNavController()
+                val cart = remember { mutableStateListOf<Producto>() }
                 NavHost(navController = navController, startDestination = "menu") {
-                    composable("menu") { MenuScreen(navController) }
-                    composable("cart") { CartScreen(navController) }
+                    composable("menu") { MenuScreen(navController,cart) }
+                    composable("cart") { CartScreen(navController, cart) }
                 }
             }
         }

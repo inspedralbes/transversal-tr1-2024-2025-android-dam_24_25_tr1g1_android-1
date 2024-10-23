@@ -13,14 +13,13 @@ import androidx.compose.ui.unit.dp
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 @Composable
-fun MenuScreen(navController: NavController) {
+fun MenuScreen(navController: NavController, cart: MutableList<Producto>) {
     var products by remember { mutableStateOf<List<Producto>?>(null) }
     var isLoading by remember { mutableStateOf(true) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
-    val cart = remember { mutableStateListOf<Producto>() }
 
     val retrofit = Retrofit.Builder()
-        .baseUrl("http://dam.inspedralbes.cat:25958")
+        .baseUrl("http://10.0.2.2:23333")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
     val apiService = retrofit.create(Interface::class.java)
@@ -37,7 +36,7 @@ fun MenuScreen(navController: NavController) {
 
     Column(modifier = Modifier.fillMaxSize()) {
         if (isLoading) {
-            CircularProgressIndicator(modifier = Modifier.padding(16.dp))
+            Text(text = "cargando los productos (FUNCIONARA)")
         } else if (errorMessage != null) {
             Text(text = errorMessage ?: "Unknown error", modifier = Modifier.padding(16.dp))
         } else {
