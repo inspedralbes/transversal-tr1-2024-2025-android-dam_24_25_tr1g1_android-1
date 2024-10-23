@@ -4,7 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#fdf2d2"
     android:padding="16dp">
+
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/logo"
+        android:layout_marginBottom="16dp"/>
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -13,16 +23,39 @@
         android:textSize="24sp"
         android:textStyle="bold"/>
 
-    <TextView
-        android:id="@+id/email_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Correo: example@example.com"
-        android:textSize="18sp"/>
+
+    <ImageView
+        android:id="@+id/profile_picture"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/perfil"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center"/>
 
     <Button
-        android:id="@+id/change_password_button"
-        android:layout_width="wrap_content"
+        android:id="@+id/personal_info_button"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Canviar contrasenya" />
+        android:text="Informació personal"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#FF9800"
+        android:textColor="#FFFFFF"/>
+
+    <Button
+        android:id="@+id/order_history_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Historial de comandes"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#FF9800"
+        android:textColor="#FFFFFF"/>
+
+    <Button
+        android:id="@+id/tornar_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tornar al menú"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#FF9800"
+        android:textColor="#FFFFFF"/>
 </LinearLayout>

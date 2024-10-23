@@ -31,7 +31,18 @@
             android:name=".RegisterActivity"
             android:exported="true"
             android:label="Registrarse" />
-
+        <activity
+            android:name=".MenuActivity"
+            android:exported="true"
+            android:label="Menu" />
+        <activity
+            android:name=".CarritoActivity"
+            android:exported="true"
+            android:label="Menu" />
+        <activity
+            android:name=".UserActivity"
+            android:exported="true"
+            android:label="perfil de usuario" />
     </application>
 
 </manifest>

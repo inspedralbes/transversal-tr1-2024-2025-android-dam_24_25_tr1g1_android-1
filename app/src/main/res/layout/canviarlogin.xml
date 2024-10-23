@@ -226,7 +226,7 @@
                 android:layout_weight="1"
                 android:backgroundTint="#FF9800"
                 android:textColor="#FFFFFF"
-                android:text="Crear compte" />
+                android:text="Aplicar Canvis" />
         </LinearLayout>
 
     </LinearLayout>

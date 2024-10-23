@@ -19,7 +19,8 @@ class LoginActivity : ComponentActivity() {
         val enerereButton: Button = findViewById(R.id.enerere_button)
 
         loginButton.setOnClickListener {
-            // Lógica para iniciar sesión
+            val intent = Intent(this, MenuActivity::class.java)
+            startActivity(intent)
         }
 
         // Lógica para el botón de enrere
