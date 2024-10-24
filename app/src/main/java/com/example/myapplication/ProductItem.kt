@@ -1,14 +1,18 @@
 package com.example.myapplication
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 
 @Composable
@@ -22,34 +26,65 @@ fun ProductItem(product: Producto, cart: MutableList<Producto>, modifier: Modifi
         Image(
             painter = rememberAsyncImagePainter(product.fotoRuta),
             contentDescription = null,
-            modifier = Modifier.fillMaxWidth().height(100.dp),
-            contentScale = ContentScale.Crop
+            modifier = Modifier.width(80.dp).height(80.dp),
+            contentScale = ContentScale.FillWidth
         )
         Text(text = " ${product.nom}")
         Text(text = " ${product.preu} €")
-        if (product.halal == 1) {
-            Text(text = " Halal")
-        } else if (product.vegan == 1) {
-            Text(text = " Vegà")
-        } else if (product.gluten == 1) {
-            Text(text = " Gluten")
-        } else if (product.lactosa == 1) {
-            Text(text = " Lactosa")
-        } else if (product.crustacis == 1) {
-            Text(text = " Crustacis")
-        }
-
-        Button(
-            onClick = {
-                cart.add(product)
-            },
+        Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp)
+                .padding(top = 8.dp),
         ) {
-            Text(text = "Afegir")
-        }
 
-        Spacer(modifier = Modifier.height(8.dp))
+            if (product.halal == 1) {
+                Image(
+                    painter = rememberAsyncImagePainter(R.drawable.halal),
+                    contentDescription = null,
+                    modifier = Modifier.width(20.dp).height(20.dp),
+                    contentScale = ContentScale.FillWidth
+                )
+            } else if (product.vegan == 1) {
+                Image(
+                    painter = rememberAsyncImagePainter(R.drawable.vegan),
+                    contentDescription = null,
+                    modifier = Modifier.width(20.dp).height(20.dp),
+                    contentScale = ContentScale.FillWidth
+                )
+            } else if (product.gluten == 1) {
+                Image(
+                    painter = rememberAsyncImagePainter(R.drawable.gluten),
+                    contentDescription = null,
+                    modifier = Modifier.width(20.dp).height(20.dp),
+                    contentScale = ContentScale.FillWidth
+                )
+            } else if (product.lactosa == 1) {
+                Image(
+                    painter = rememberAsyncImagePainter(R.drawable.lacteos),
+                    contentDescription = null,
+                    modifier = Modifier.width(20.dp).height(20.dp),
+                    contentScale = ContentScale.FillWidth
+                )
+            } else if (product.crustacis == 1) {
+                Image(
+                    painter = rememberAsyncImagePainter(R.drawable.crustaceo),
+                    contentDescription = null,
+                    modifier = Modifier.width(20.dp).height(20.dp),
+                    contentScale = ContentScale.FillWidth
+                )
+            }
+
+            Button(
+                onClick = {
+                    cart.add(product)
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp)
+            ) {
+                Text(text = "Afegir")
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+        }
     }
 }

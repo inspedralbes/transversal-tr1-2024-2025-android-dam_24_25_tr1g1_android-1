@@ -19,7 +19,7 @@ fun MenuScreen(navController: NavController, cart: MutableList<Producto>) {
     var errorMessage by remember { mutableStateOf<String?>(null) }
 
     val retrofit = Retrofit.Builder()
-        .baseUrl("http://10.0.2.2:23333")
+        .baseUrl("http://dam.inspedralbes.cat:26968")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
     val apiService = retrofit.create(Interface::class.java)
@@ -40,6 +40,15 @@ fun MenuScreen(navController: NavController, cart: MutableList<Producto>) {
         } else if (errorMessage != null) {
             Text(text = errorMessage ?: "Unknown error", modifier = Modifier.padding(16.dp))
         } else {
+            Button(
+                onClick = { navController.navigate("profile") },
+                modifier = Modifier
+                    .padding(16.dp)
+                    .align(Alignment.End)
+            ) {
+                Text(text = "Pefil")
+            }
+
             products?.let { productList ->
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
