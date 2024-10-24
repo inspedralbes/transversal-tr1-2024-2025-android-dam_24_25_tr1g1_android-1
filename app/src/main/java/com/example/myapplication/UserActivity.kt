@@ -9,23 +9,32 @@ class UserActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.perfil) // Asegúrate de que el nombre del archivo XML sea correcto
+        setContentView(R.layout.perfil)
 
-        // Configura el botón para volver al menú
-        val backToMenuButton = findViewById<Button>(R.id.tornar_menu)
-        backToMenuButton.setOnClickListener {
-            // Crea un Intent para volver a MenuActivity
-            val intent = Intent(this, MenuActivity::class.java)
-            startActivity(intent)
-            finish() // Finaliza esta actividad si no quieres que se quede en la pila de actividades
-        }
-
-        // Configura el botón para abrir la actividad de información personal
         val personalInfoButton = findViewById<Button>(R.id.personal_info_button)
         personalInfoButton.setOnClickListener {
-            // Crea un Intent para abrir PersonalInfoActivity
             val intent = Intent(this, InfoPersonalActivity::class.java)
             startActivity(intent)
+            finish()
+        }
+        val HistorialComButton = findViewById<Button>(R.id.order_history_button)
+        HistorialComButton.setOnClickListener {
+            val intent = Intent(this, HistorialComandesActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        val backToMenuButton = findViewById<Button>(R.id.tornar_menu)
+        backToMenuButton.setOnClickListener {
+            val intent = Intent(this, MenuActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        val tancarSessióButton = findViewById<Button>(R.id.tancar_sessio)
+        tancarSessióButton.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 }

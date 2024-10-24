@@ -5,23 +5,23 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.activity.ComponentActivity
 
-class CarritoActivity : ComponentActivity() {
+class PagoActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.carrito)
+        setContentView(R.layout.pagament)
 
-        val backButton = findViewById<Button>(R.id.tornar_menu)
+        val backButton = findViewById<Button>(R.id.back_button)
 
         backButton.setOnClickListener {
-            val intent = Intent(this, MenuActivity::class.java)
+            val intent = Intent(this, CarritoActivity::class.java)
             startActivity(intent)
             finish()
         }
-        val FerPagamentButton = findViewById<Button>(R.id.checkout_button)
+        val PayNowButton = findViewById<Button>(R.id.pay_now_button)
 
-        FerPagamentButton.setOnClickListener {
-            val intent = Intent(this, PagoActivity::class.java)
+        PayNowButton.setOnClickListener {
+            val intent = Intent(this, CuinaActivity::class.java)
             startActivity(intent)
             finish()
         }

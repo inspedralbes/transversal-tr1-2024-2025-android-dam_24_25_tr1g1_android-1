@@ -11,7 +11,7 @@ class LoginActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.login) // Asegúrate de que este sea el nombre correcto de tu archivo XML
+        setContentView(R.layout.login)
 
         val emailField: EditText = findViewById(R.id.email)
         val passwordField: EditText = findViewById(R.id.password)
@@ -23,12 +23,10 @@ class LoginActivity : ComponentActivity() {
             startActivity(intent)
         }
 
-        // Lógica para el botón de enrere
         enerereButton.setOnClickListener {
-            // Regresa a la MainActivity
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
-            finish() // Finaliza la actividad actual para que no vuelva a esta al presionar el botón "Atrás"
+            finish()
         }
     }
 }

@@ -9,21 +9,26 @@ class MenuActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.menu) // Asegúrate de que el layout se llama correctamente
+        setContentView(R.layout.menu)
 
-        // Configura el botón del usuario
         val userButton = findViewById<ImageView>(R.id.user_button)
 
         userButton.setOnClickListener {
-            // Crea un Intent para ir a UserActivity
+
             val intent = Intent(this, UserActivity::class.java)
-            startActivity(intent) // Inicia UserActivity
+            startActivity(intent)
         }
 
-        // Configura el botón del carrito si es necesario
+        val detalleButton = findViewById<ImageView>(R.id.ComidaDetallada)
+        detalleButton.setOnClickListener {
+
+            val intent = Intent(this, DetalleProductoActivity::class.java)
+            startActivity(intent)
+        }
+
         val cartButton = findViewById<ImageView>(R.id.cart_button)
         cartButton.setOnClickListener {
-            // Aquí puedes agregar la lógica para ir a CarritoActivity si es necesario
+
             val intent = Intent(this, CarritoActivity::class.java)
             startActivity(intent)
         }

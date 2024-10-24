@@ -6,7 +6,6 @@
     android:background="#fdf2d2"
     android:padding="16dp">
 
-    <!-- Contenedor principal centrado -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

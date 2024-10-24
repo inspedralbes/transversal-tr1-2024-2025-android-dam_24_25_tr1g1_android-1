@@ -38,11 +38,35 @@
         <activity
             android:name=".CarritoActivity"
             android:exported="true"
-            android:label="Menu" />
+            android:label="Carrito de la compra" />
         <activity
             android:name=".UserActivity"
             android:exported="true"
             android:label="perfil de usuario" />
+        <activity
+            android:name=".InfoPersonalActivity"
+            android:exported="true"
+            android:label="Informacion personal" />
+        <activity
+            android:name=".PagoActivity"
+            android:exported="true"
+            android:label="Pago del usuario" />
+        <activity
+            android:name=".CuinaActivity"
+            android:exported="true"
+            android:label="Confirmacion de la cocina" />
+        <activity
+            android:name=".HistorialComandesActivity"
+            android:exported="true"
+            android:label="Historial de las comandas" />
+        <activity
+            android:name=".EstatComandaActivity"
+            android:exported="true"
+            android:label="Estat de la comanda" />
+        <activity
+            android:name=".DetalleProductoActivity"
+            android:exported="true"
+            android:label="Detalle del producto" />
     </application>
 
 </manifest>

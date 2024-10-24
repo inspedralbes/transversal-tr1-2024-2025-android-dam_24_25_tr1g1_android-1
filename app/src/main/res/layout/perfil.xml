@@ -7,22 +7,16 @@
     android:background="#fdf2d2"
     android:padding="16dp">
 
-
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@drawable/logo"
-        android:layout_marginBottom="16dp"/>
-
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="El meu perfil"
-        android:textSize="24sp"
-        android:textStyle="bold"/>
-
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:paddingTop="8dp"
+        android:paddingBottom="16dp" />
 
     <ImageView
         android:id="@+id/profile_picture"
@@ -58,4 +52,13 @@
         android:layout_marginTop="8dp"
         android:backgroundTint="#FF9800"
         android:textColor="#FFFFFF"/>
+    <Button
+        android:id="@+id/tancar_sessio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tancar la sessió"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#FF9800"
+        android:textColor="#FFFFFF"/>
+
 </LinearLayout>

@@ -92,6 +92,7 @@
             android:columnCount="3"
             android:rowCount="2">
 
+            <!-- Bucle para los alérgenos -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -103,17 +104,19 @@
                     android:id="@+id/allergen1_image"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/crustacio" />
+                    android:src="@drawable/crustacio"
+                    android:background="@drawable/image_selector" />
 
                 <ToggleButton
                     android:id="@+id/allergen1_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-                    android:textOff="NO"
-                    android:textOn="SI" />
+                    android:textOff=""
+                    android:textOn="" />
             </LinearLayout>
 
+            <!-- Repite esto para los otros alérgenos -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -125,15 +128,16 @@
                     android:id="@+id/allergen2_image"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/lacteos" />
+                    android:src="@drawable/lacteos"
+                    android:background="@drawable/image_selector" />
 
                 <ToggleButton
                     android:id="@+id/allergen2_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-                    android:textOff="NO"
-                    android:textOn="SI" />
+                    android:textOff=""
+                    android:textOn="" />
             </LinearLayout>
 
             <LinearLayout
@@ -147,15 +151,16 @@
                     android:id="@+id/allergen3_image"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/vegan" />
+                    android:src="@drawable/vegan"
+                    android:background="@drawable/image_selector" />
 
                 <ToggleButton
                     android:id="@+id/allergen3_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-                    android:textOff="NO"
-                    android:textOn="SI" />
+                    android:textOff=""
+                    android:textOn="" />
             </LinearLayout>
 
             <LinearLayout
@@ -169,15 +174,16 @@
                     android:id="@+id/allergen4_image"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/halal" />
+                    android:src="@drawable/halal"
+                    android:background="@drawable/image_selector" />
 
                 <ToggleButton
                     android:id="@+id/allergen4_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-                    android:textOff="NO"
-                    android:textOn="SI" />
+                    android:textOff=""
+                    android:textOn="" />
             </LinearLayout>
 
             <LinearLayout
@@ -191,15 +197,16 @@
                     android:id="@+id/allergen5_image"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/gluten" />
+                    android:src="@drawable/gluten"
+                    android:background="@drawable/image_selector" />
 
                 <ToggleButton
                     android:id="@+id/allergen5_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-                    android:textOff="NO"
-                    android:textOn="SI" />
+                    android:textOff=""
+                    android:textOn="" />
             </LinearLayout>
         </GridLayout>
 

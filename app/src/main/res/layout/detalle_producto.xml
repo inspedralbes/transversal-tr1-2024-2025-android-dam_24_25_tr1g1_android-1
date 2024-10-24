@@ -8,55 +8,107 @@
     android:background="#fdf2d2">
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Detalls del producte"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:paddingTop="8dp"
+        android:paddingBottom="16dp" />
+
+    <ImageView
+        android:id="@+id/ComidaDetallada"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@drawable/logo"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp" />
+
+    <TextView
         android:id="@+id/product_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Burguer Cangreburger"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:text="Burger Cangreburger"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp" />
 
     <TextView
         android:id="@+id/product_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Descripción: RECETA SECRETA !"
-        android:textSize="16sp" />
+        android:text="Hamburguesa deliciosa con ingredientes frescos y la receta secreta"
+        android:textSize="16sp"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp" />
 
     <TextView
         android:id="@+id/product_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="12,99€"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp">
 
         <Button
-            android:id="@+id/decrease_quantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="-"/>
+            android:id="@+id/button_decrease"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text="-"
+            android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/product_quantity"
+            android:id="@+id/quantity_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"
-            android:layout_margin="16dp"/>
+            android:text="1"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp" />
 
         <Button
-            android:id="@+id/increase_quantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="+"/>
+            android:id="@+id/button_increase"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text="+"
+            android:textSize="20sp" />
     </LinearLayout>
 
+
     <Button
-        android:id="@+id/add_to_cart"
-        android:layout_width="match_parent"
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Añadir al carrito" />
+        android:text="Tornar enrere"
+        android:textSize="16sp"
+        android:backgroundTint="#FF9800"
+        android:textColor="#FFFFFF"
+        android:layout_gravity="start"
+        android:layout_marginTop="32dp"
+        android:layout_marginLeft="16dp" />
+
+
+    <ImageView
+        android:id="@+id/cart_button"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/carrito"
+        android:layout_gravity="end"
+        android:layout_marginTop="-64dp"
+        android:layout_marginRight="16dp"/>
 </LinearLayout>
