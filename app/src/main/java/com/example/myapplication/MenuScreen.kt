@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import androidx.compose.foundation.Image
 import androidx.navigation.NavController
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -9,7 +10,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberAsyncImagePainter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 @Composable
@@ -40,14 +44,35 @@ fun MenuScreen(navController: NavController, cart: MutableList<Producto>) {
         } else if (errorMessage != null) {
             Text(text = errorMessage ?: "Unknown error", modifier = Modifier.padding(16.dp))
         } else {
-            Button(
-                onClick = { navController.navigate("profile") },
+            Row(
                 modifier = Modifier
-                    .padding(16.dp)
-                    .align(Alignment.End)
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.Top
             ) {
-                Text(text = "Pefil")
+                Text(
+                    text = "Benvingut",
+                    modifier = Modifier.padding(top = 50.dp, start = 90.dp)
+                )
+                Button(
+                    onClick = { navController.navigate("profile") },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent
+                    ),
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    Image(
+                        painter = rememberAsyncImagePainter(R.drawable.perfil),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .width(50.dp)
+                            .height(50.dp),
+                        contentScale = ContentScale.FillWidth
+                    )
+                }
             }
+
 
             products?.let { productList ->
                 LazyVerticalGrid(
@@ -57,7 +82,7 @@ fun MenuScreen(navController: NavController, cart: MutableList<Producto>) {
                         .padding(16.dp)
                 ) {
                     items(productList) { product ->
-                        ProductItem(product = product, cart)
+                        ProductItem(navController = navController, product = product, cart = cart)
                     }
                 }
             }

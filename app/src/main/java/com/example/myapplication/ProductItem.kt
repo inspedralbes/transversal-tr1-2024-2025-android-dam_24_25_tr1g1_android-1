@@ -16,7 +16,7 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 
 @Composable
-fun ProductItem(product: Producto, cart: MutableList<Producto>, modifier: Modifier = Modifier) {
+fun ProductItem(navController: NavController,product: Producto, cart: MutableList<Producto>, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .padding(8.dp)
@@ -29,7 +29,14 @@ fun ProductItem(product: Producto, cart: MutableList<Producto>, modifier: Modifi
             modifier = Modifier.width(80.dp).height(80.dp),
             contentScale = ContentScale.FillWidth
         )
-        Text(text = " ${product.nom}")
+        Button(
+            { navController.navigate("description/${product.id}") },
+            modifier = Modifier.padding(16.dp)
+        ) {
+
+            Text(text = " ${product.nom}")
+
+        }
         Text(text = " ${product.preu} €")
         Row(
             modifier = Modifier
