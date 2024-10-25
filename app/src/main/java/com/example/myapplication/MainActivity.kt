@@ -31,7 +31,6 @@ class MainActivity : ComponentActivity() {
                 NavHost(navController = navController, startDestination = "menu") {
                     composable("menu") { MenuScreen(navController,cart) }
                     composable("cart") { CartScreen(navController, cart) }
-                    composable("profile") { ProfileScreen(navController) }
                     composable("description") {Description(navController, cart)
                     }
 
