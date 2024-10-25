@@ -37,12 +37,10 @@ class MainActivity : ComponentActivity() {
             modifier = modifier,
             factory = { context ->
                 LayoutInflater.from(context).inflate(R.layout.inicio, null).apply {
-                    // Configura el botón de inicio de sesión
                     findViewById<Button>(R.id.login_button).setOnClickListener {
                         val intent = Intent(context, LoginActivity::class.java)
                         context.startActivity(intent)
                     }
-                    // Configura el botón de nueva cuenta
                     findViewById<Button>(R.id.new_account_button).setOnClickListener {
                         val intent = Intent(context, RegisterActivity::class.java)
                         context.startActivity(intent)
