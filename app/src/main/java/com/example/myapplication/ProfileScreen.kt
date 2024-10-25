@@ -26,7 +26,7 @@ fun ProfileScreen(navController: NavController) {
         Button(
             onClick = { navController.popBackStack() },
             modifier = Modifier
-                .padding(16.dp)
+                .padding(16.dp),
         ) {
             Text(text = "Menú")
         }

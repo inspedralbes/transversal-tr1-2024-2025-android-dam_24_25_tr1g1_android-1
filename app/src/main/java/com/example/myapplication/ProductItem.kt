@@ -30,7 +30,7 @@ fun ProductItem(navController: NavController,product: Producto, cart: MutableLis
             contentScale = ContentScale.FillWidth
         )
         Button(
-            { navController.navigate("description/${product.id}") },
+            { navController.navigate("description") },
             modifier = Modifier.padding(16.dp)
         ) {
 
@@ -87,6 +87,7 @@ fun ProductItem(navController: NavController,product: Producto, cart: MutableLis
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 8.dp)
+
             ) {
                 Text(text = "Afegir")
             }
