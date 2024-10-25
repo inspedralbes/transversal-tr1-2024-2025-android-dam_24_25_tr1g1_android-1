@@ -37,23 +37,21 @@
             android:src="@drawable/perfil" />
     </LinearLayout>
 
+    <!-- Contenedor para los productos añadidos dinámicamente -->
     <LinearLayout
+        android:id="@+id/product_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical" />
 
-        <TextView
-            android:id="@+id/product_in_cart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Burguer Cangreburger - 12,99€"/>
-
-        <TextView
-            android:id="@+id/total_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="30,98€ TOTAL" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/total_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TOTAL: 0,00€"
+        android:textSize="18sp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp" />
 
     <Button
         android:id="@+id/tornar_menu"
