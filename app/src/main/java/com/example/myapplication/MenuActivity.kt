@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.widget.*
 import androidx.activity.ComponentActivity
 import coil.load
+import com.example.myapplication.network.Interface
+import com.example.myapplication.network.Producto
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -91,13 +93,11 @@ class MenuActivity : ComponentActivity() {
             if (product.lactosa == 1) productView.findViewById<ImageView>(R.id.lactosa_icon).visibility = ImageView.VISIBLE
             if (product.crustacis == 1) productView.findViewById<ImageView>(R.id.crustacis_icon).visibility = ImageView.VISIBLE
 
-            // Configurar botones de agregar al carrito
             addButton.setOnClickListener {
                 cart.add(product)
                 Toast.makeText(this, "${product.nom} añadido al carrito", Toast.LENGTH_SHORT).show()
             }
 
-            // Agregar la vista del producto al GridLayout
             productsGrid.addView(productView)
         }
     }

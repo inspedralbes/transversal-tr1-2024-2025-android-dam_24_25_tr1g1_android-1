@@ -13,6 +13,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.example.myapplication.network.Producto
 
 @Composable
 fun CartScreen(navController: NavController, cart: MutableList<Producto>) {
@@ -53,7 +54,7 @@ fun CartScreen(navController: NavController, cart: MutableList<Producto>) {
         @Composable
         fun ProductCart(
             product: Producto,
-            count: Int ,
+            count: Int,
             cart: MutableList<Producto>,
             modifier: Modifier = Modifier
         ) {

@@ -16,10 +16,9 @@ class RegisterActivity : ComponentActivity() {
         val emailField: EditText = findViewById(R.id.email)
         val passwordField: EditText = findViewById(R.id.password)
         val confirmPasswordField: EditText = findViewById(R.id.confirm_password)
-        val createAccountButton: Button = findViewById(R.id.login_button) // Cambia el ID si es necesario
-        val enerereButton: Button = findViewById(R.id.enerere_button) // Usando el ID correcto
+        val createAccountButton: Button = findViewById(R.id.login_button)
+        val enerereButton: Button = findViewById(R.id.enerere_button)
 
-        // Referencias a las imágenes de alérgenos
         val allergen1Image: ImageView = findViewById(R.id.allergen1_image)
         val allergen2Image: ImageView = findViewById(R.id.allergen2_image)
         val allergen3Image: ImageView = findViewById(R.id.allergen3_image)
@@ -27,7 +26,6 @@ class RegisterActivity : ComponentActivity() {
         val allergen5Image: ImageView = findViewById(R.id.allergen5_image)
 
         createAccountButton.setOnClickListener {
-            // Lógica para crear cuenta
         }
 
         enerereButton.setOnClickListener {
@@ -36,7 +34,6 @@ class RegisterActivity : ComponentActivity() {
             finish()
         }
 
-        // Añadir OnClickListeners a cada imagen de alérgenos
         allergen1Image.setOnClickListener { toggleSelection(allergen1Image) }
         allergen2Image.setOnClickListener { toggleSelection(allergen2Image) }
         allergen3Image.setOnClickListener { toggleSelection(allergen3Image) }

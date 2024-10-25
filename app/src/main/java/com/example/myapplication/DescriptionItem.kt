@@ -19,6 +19,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.example.myapplication.network.Producto
 
 @Composable
 fun Description(navController: NavController, cart: MutableList<Producto>) {

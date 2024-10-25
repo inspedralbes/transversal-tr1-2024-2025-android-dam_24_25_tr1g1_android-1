@@ -14,6 +14,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.example.myapplication.network.Interface
+import com.example.myapplication.network.Producto
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 @Composable

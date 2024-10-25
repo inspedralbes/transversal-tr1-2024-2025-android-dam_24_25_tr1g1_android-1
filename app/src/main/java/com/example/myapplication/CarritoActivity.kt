@@ -6,8 +6,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.ComponentActivity
-import androidx.appcompat.app.AlertDialog
-import com.example.myapplication.R
+import com.example.myapplication.network.Producto
 
 class CarritoActivity : ComponentActivity() {
 

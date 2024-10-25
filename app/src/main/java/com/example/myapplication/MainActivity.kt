@@ -18,6 +18,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
+import com.example.myapplication.network.Producto
 import com.example.myapplication.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
@@ -45,7 +46,7 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
+    //Función para cargar la pantalla de inicio
     @Composable
     fun ShowXmlLayout(modifier: Modifier = Modifier) {
         AndroidView(
