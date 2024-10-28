@@ -123,7 +123,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Tornar a la carta"
-            android:backgroundTint="#8B4513"
+            android:backgroundTint="#FF9800"
             android:textColor="#FFFFFF"
             android:padding="16dp"
             android:textSize="18sp"

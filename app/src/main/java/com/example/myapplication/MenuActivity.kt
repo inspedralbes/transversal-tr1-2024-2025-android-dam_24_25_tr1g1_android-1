@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import DescriptionActivity.DescriptionActivity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.*
@@ -81,11 +82,26 @@ class MenuActivity : ComponentActivity() {
             val productPrice = productView.findViewById<TextView>(R.id.product_price)
             val productImage = productView.findViewById<ImageView>(R.id.product_image)
             val addButton = productView.findViewById<Button>(R.id.add_button)
+            val productDesc = productView.findViewById<TextView>(R.id.product_desc)
 
 
             productName.text = product.nom
-            productPrice.text = "${product.preu}€"
-            productImage.load(product.fotoRuta)
+            if (product.oferta !=null) {
+                productPrice.text = "${product.preu}€"
+            }
+            else{
+                productPrice.text = "${product.oferta}€"
+            }
+            productImage.load("http://dam.inspedralbes.cat:26968/" + product.fotoRuta)
+            productImage.setOnClickListener {
+                productImage.visibility = ImageView.GONE
+                productDesc.visibility = TextView.VISIBLE
+            }
+            productDesc.text=product.descripcio
+            productView.setOnClickListener {
+                productImage.visibility = TextView.VISIBLE
+                productDesc.visibility = ImageView.GONE
+            }
 
             if (product.halal == 1) productView.findViewById<ImageView>(R.id.halal_icon).visibility = ImageView.VISIBLE
             if (product.vegan == 1) productView.findViewById<ImageView>(R.id.vegan_icon).visibility = ImageView.VISIBLE

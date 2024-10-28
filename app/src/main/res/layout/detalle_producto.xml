@@ -68,6 +68,9 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:text="-"
+            android:backgroundTint="#FF9800"
+            android:textColor="#FFFFFF"
+
             android:textSize="20sp" />
 
         <TextView
@@ -86,6 +89,8 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:text="+"
+            android:backgroundTint="#FF9800"
+            android:textColor="#FFFFFF"
             android:textSize="20sp" />
     </LinearLayout>
 
