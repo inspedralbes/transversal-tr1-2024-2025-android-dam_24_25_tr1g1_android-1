@@ -55,6 +55,10 @@
                 android:columnCount="2"
                 android:layout_marginTop="16dp"
                 android:padding="8dp"
+                android:layout_margin="8dp"
+                android:columnOrderPreserved="false"
+                android:layoutMode="opticalBounds"
+                android:useDefaultMargins="true"
                 />
         </LinearLayout>
     </ScrollView>
