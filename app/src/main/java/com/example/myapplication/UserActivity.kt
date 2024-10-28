@@ -34,6 +34,7 @@ class UserActivity : ComponentActivity() {
         tancarSessióButton.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            CartManager.clearCart()
             finish()
         }
     }
