@@ -1,0 +1,5 @@
+package DescriptionActivity
+
+class DescriptionActivity {
+
+}

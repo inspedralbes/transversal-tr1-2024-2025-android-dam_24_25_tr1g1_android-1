@@ -55,6 +55,10 @@
                 android:columnCount="2"
                 android:layout_marginTop="16dp"
                 android:padding="8dp"
+                android:layout_margin="8dp"
+                android:columnOrderPreserved="false"
+                android:layoutMode="opticalBounds"
+                android:useDefaultMargins="true"
                 />
         </LinearLayout>
     </ScrollView>
@@ -73,15 +77,17 @@
             android:id="@+id/exit_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Salir del juego"
+            android:text="Salir la app"
             android:layout_gravity="start"
-            android:layout_marginEnd="16dp" />
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="#FF9800"
+            android:textColor="#FFFFFF"/>
 
         <ImageView
             android:id="@+id/cart_button"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:src="@drawable/carrito"
-            android:layout_gravity="end" />
+            android:layout_gravity="end"
+            android:src="@drawable/carrito" />
     </LinearLayout>
 </RelativeLayout>

@@ -22,7 +22,7 @@ fun ProductItem(navController: NavController, product: Producto, cart: MutableLi
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = rememberAsyncImagePainter(product.fotoRuta),
+            painter = rememberAsyncImagePainter("http://dam.inspedralbes.cat:26968/" + product.fotoRuta),
             contentDescription = null,
             modifier = Modifier.width(80.dp).height(80.dp),
             contentScale = ContentScale.FillWidth
