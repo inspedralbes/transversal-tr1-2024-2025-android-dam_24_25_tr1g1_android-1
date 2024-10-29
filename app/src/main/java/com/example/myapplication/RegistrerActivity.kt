@@ -10,6 +10,13 @@ import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
 import java.net.URL
 import java.security.MessageDigest
+import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
+import com.example.myapplication.network.Interface
+import com.google.gson.Gson
+import kotlinx.coroutines.launch
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class RegisterActivity : ComponentActivity() {
 
@@ -30,28 +37,47 @@ class RegisterActivity : ComponentActivity() {
         val allergen5Image: ImageView = findViewById(R.id.allergen5_image)
 
         createAccountButton.setOnClickListener {
-            val url = URL("http://pregrillgrab.dam.inspedralbes.cat:26968/register")
-            val connection = url.openConnection() as HttpURLConnection
-            connection.requestMethod = "POST"
-            connection.setRequestProperty("Content-Type", "application/json; utf-8")
-            connection.doOutput = true
-            val requestBody = """
-                {
-                    "email": "${emailField.text}",
-                    "password": "${hashPassword(passwordField.text.toString())}",
-                    "allergens": [
-                        ${allergen1Image.isSelected},
-                        ${allergen2Image.isSelected},
-                        ${allergen3Image.isSelected},
-                        ${allergen4Image.isSelected},
-                        ${allergen5Image.isSelected}
-                    ]
-                }
-            """.trimIndent()
-            val outputStream = OutputStreamWriter(connection.outputStream)
-            outputStream.write(requestBody)
-            outputStream.flush()
+            if(passwordField.text.toString() != confirmPasswordField.text.toString()){
 
+                // Mostrar un mensaje de error o realizar alguna acción
+                Toast.makeText(this, "Les contrasenyes no coincideixen", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            } else {
+                    val retrofit = Retrofit.Builder()
+                        .baseUrl("http://pregrillgrab.dam.inspedralbes.cat:26968")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build()
+                    val apiService = retrofit.create(Interface::class.java)
+
+                var user = User().apply {
+                    nom = emailField.text.toString()
+                    correu = emailField.text.toString()
+                    contrasenya = hashPassword(passwordField.text.toString())
+                    halal = if (allergen1Image.isSelected) 1 else 0
+                    vegan = if (allergen2Image.isSelected) 1 else 0
+                    gluten = if (allergen3Image.isSelected) 1 else 0
+                    lactosa = if (allergen4Image.isSelected) 1 else 0
+                    crustacis = if (allergen5Image.isSelected) 1 else 0
+                }
+
+
+                lifecycleScope.launch {
+
+                    val userData = apiService.registerUser(user = user)
+                    user=userData[0]
+
+
+                    if (user.id != 0) {
+
+                        val intent = Intent(this@RegisterActivity, MenuActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    } else {
+
+                        Toast.makeText(this@RegisterActivity, "Error: Server Error", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
         }
 
         enerereButton.setOnClickListener {
