@@ -6,6 +6,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.activity.ComponentActivity
+import java.io.OutputStreamWriter
+import java.net.HttpURLConnection
+import java.net.URL
+import java.security.MessageDigest
 
 class RegisterActivity : ComponentActivity() {
 
@@ -26,6 +30,28 @@ class RegisterActivity : ComponentActivity() {
         val allergen5Image: ImageView = findViewById(R.id.allergen5_image)
 
         createAccountButton.setOnClickListener {
+            val url = URL("http://pregrillgrab.dam.inspedralbes.cat:26968/register")
+            val connection = url.openConnection() as HttpURLConnection
+            connection.requestMethod = "POST"
+            connection.setRequestProperty("Content-Type", "application/json; utf-8")
+            connection.doOutput = true
+            val requestBody = """
+                {
+                    "email": "${emailField.text}",
+                    "password": "${hashPassword(passwordField.text.toString())}",
+                    "allergens": [
+                        ${allergen1Image.isSelected},
+                        ${allergen2Image.isSelected},
+                        ${allergen3Image.isSelected},
+                        ${allergen4Image.isSelected},
+                        ${allergen5Image.isSelected}
+                    ]
+                }
+            """.trimIndent()
+            val outputStream = OutputStreamWriter(connection.outputStream)
+            outputStream.write(requestBody)
+            outputStream.flush()
+
         }
 
         enerereButton.setOnClickListener {
@@ -39,6 +65,10 @@ class RegisterActivity : ComponentActivity() {
         allergen3Image.setOnClickListener { toggleSelection(allergen3Image) }
         allergen4Image.setOnClickListener { toggleSelection(allergen4Image) }
         allergen5Image.setOnClickListener { toggleSelection(allergen5Image) }
+    }
+    private fun hashPassword(password: String): String {
+        val bytes = MessageDigest.getInstance("SHA-256").digest(password.toByteArray())
+        return bytes.joinToString("") { "%02x".format(it) }
     }
 
     private fun toggleSelection(imageView: ImageView) {
