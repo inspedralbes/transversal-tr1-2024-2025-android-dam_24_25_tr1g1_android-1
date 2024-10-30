@@ -1,6 +1,7 @@
 package com.example.myapplication.network
 import android.os.Parcelable
 import com.example.myapplication.ComandaManager
+import com.example.myapplication.User
 import kotlinx.parcelize.Parcelize
 import retrofit2.http.Body
 
@@ -16,6 +17,16 @@ interface Interface {
     suspend fun getComanData(): List<ComandaManager.Comanda>
     @POST("/addComan")
     suspend fun addComanda(@Body comanda: ComandaManager.ComandaAdd): Int
+
+    @POST("/addUser")
+    suspend fun registerUser(
+        @Body user: User
+    ): List<User>
+
+    @POST("/login")
+    suspend fun loginUser(
+        @Body user: User
+    ): List<User>
 }
 @Parcelize
 data class Producto(
