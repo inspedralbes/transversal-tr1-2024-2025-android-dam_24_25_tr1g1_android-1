@@ -35,6 +35,7 @@ class UserActivity : ComponentActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             CartManager.clearCart()
+            UserManager.clearUser()
             finish()
         }
     }
