@@ -21,15 +21,19 @@ import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import com.example.myapplication.SocketManager
+import org.json.JSONObject
+
 
 class HistorialComandesActivity : ComponentActivity() {
 
     private lateinit var comandsList: List<ComandaManager.Comanda>
     val changeComandaStatus = Emitter.Listener { args ->
-        val data = args
+        val data = args[0] as JSONObject
+        val id = data.getInt("id")
+        val estat = data.getString("estat")
         comandsList = comandsList.map {
-            if (it.id == data[0]) {
-                it.estat = data[1].toString()
+            if (it.id == id) {
+                it.estat = estat
             }
             it
         }
@@ -39,7 +43,7 @@ class HistorialComandesActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        socket?.on("ChangeComanda", changeComandaStatus)
+        socket?.on("comandaUpdated", changeComandaStatus)
         setContentView(R.layout.historialcomandes)
         loadComandes()
 
