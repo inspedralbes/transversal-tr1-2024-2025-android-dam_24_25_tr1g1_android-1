@@ -6,12 +6,27 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.ComponentActivity
+import io.socket.emitter.Emitter
 
 class EstatComandaActivity : ComponentActivity() {
+    var socket= SocketManager.socket
+    val changeComandaStatus = Emitter.Listener { args ->
+        val data = args
+//        comandsList = comandsList.map {
+//            if (it.id == data[0]) {
+//                it.estat = data[1].toString()
+//            }
+//            it
+//        }
+//        loadComanda()
+    }
 
    @SuppressLint("MissingInflatedId")
    override fun onCreate(savedInstanceState: Bundle?) {
+
     super.onCreate(savedInstanceState)
+
+    socket?.on("ChangeComanda", changeComandaStatus)
     setContentView(R.layout.estado_orden)
 
     val comandaId = intent.getIntExtra("comanda_id", -1)
