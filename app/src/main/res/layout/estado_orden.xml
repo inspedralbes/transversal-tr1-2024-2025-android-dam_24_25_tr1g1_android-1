@@ -80,56 +80,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:padding="8dp"/>
 
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_marginRight="16dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/logo" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:text="Burguer Cangreburger"
-                    android:textColor="#000000"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_marginRight="16dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/logo" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:text="Burguer Cangreburger"
-                    android:textColor="#000000"
-                    android:textSize="16sp" />
-            </LinearLayout>
         </LinearLayout>
+
+        <Button
+            android:id="@+id/cancel_comanda_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#FF9800"
+            android:padding="16dp"
+            android:text="Cancelar Comanda"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/back_to_menu_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tornar a la carta"
+            android:layout_marginTop="16dp"
             android:backgroundTint="#FF9800"
-            android:textColor="#FFFFFF"
             android:padding="16dp"
-            android:textSize="18sp"
-            android:layout_marginTop="16dp"/>
+            android:text="Tornar a l'historial"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
     </LinearLayout>
 </ScrollView>

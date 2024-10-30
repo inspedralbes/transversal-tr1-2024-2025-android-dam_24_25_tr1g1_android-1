@@ -11,13 +11,15 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 
-val BASE_URL = "http://dam.inspedralbes.cat:26968"
+val BASE_URL = "http://pregrillgrab.dam.inspedralbes.cat:26968"
 
 interface Interface {
     @GET("/getProd")
     suspend fun getProductData(): List<Producto>
-    @GET("/getComan/{userId}")
+    @GET("/getComanClient/{userId}")
     suspend fun getComanData(@Path("userId") userId: String): List<ComandaManager.Comanda>
+    @GET("/getComan/{Id}")
+    suspend fun getComanDataOne(@Path("Id") userId: String): String
     @POST("/addComan")
     suspend fun addComanda(@Body comanda: ComandaManager.ComandaAdd): Int
 

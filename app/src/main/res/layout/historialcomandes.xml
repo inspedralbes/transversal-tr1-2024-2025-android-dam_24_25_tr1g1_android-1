@@ -129,10 +129,10 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/back_to_profile_button"
+                android:id="@+id/back_to_user_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tornar al perfil"
+                android:text="Tornar a user"
                 android:backgroundTint="#FF9800"
                 android:textColor="#FFFFFF"
                 android:padding="16dp"

@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -22,14 +23,15 @@ class HistorialComandesActivity : ComponentActivity() {
 
     private lateinit var comandsList: List<ComandaManager.Comanda>
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.historialcomandes)
         loadComandes()
 
-        val backToUserButton = findViewById<Button>(R.id.back_to_profile_button)
+        val backToUserButton = findViewById<Button>(R.id.back_to_user_button)
         backToUserButton.setOnClickListener {
-            val intent = Intent(this, UserActivity::class.java)
+            val intent = Intent(this, InfoPersonalActivity::class.java)
             startActivity(intent)
             finish()
         }
