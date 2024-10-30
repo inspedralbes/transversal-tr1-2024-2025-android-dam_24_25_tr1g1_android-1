@@ -9,7 +9,7 @@ object SocketManager {
     var socket: Socket? = null
 
     init {
-        socket = IO.socket("http://chat.socket.io")
+        socket = IO.socket("http://dam.inspedralbes.cat:26968")
     }
 
     fun onCreate(savedInstanceState: Bundle?) {
