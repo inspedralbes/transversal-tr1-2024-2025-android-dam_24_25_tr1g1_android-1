@@ -7,7 +7,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 
-val BASE_URL = "http://192.168.1.136:26968"
+val BASE_URL = "http://dam.inspedralbes.cat:26968"
 
 interface Interface {
     @GET("/getProd")
