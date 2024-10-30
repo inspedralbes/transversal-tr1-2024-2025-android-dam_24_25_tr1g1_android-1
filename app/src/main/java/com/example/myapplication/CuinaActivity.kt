@@ -39,7 +39,7 @@ class CuinaActivity : ComponentActivity() {
 
         val VeureEstatButton = findViewById<Button>(R.id.view_status_button)
         VeureEstatButton.setOnClickListener {
-            val intent = Intent(this, EstatComandaActivity::class.java)
+            val intent = Intent(this, HistorialComandesActivity::class.java)
             startActivity(intent)
             finish()
         }

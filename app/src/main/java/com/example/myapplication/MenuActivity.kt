@@ -1,6 +1,5 @@
 package com.example.myapplication
 
-import DescriptionActivity.DescriptionActivity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.*
@@ -79,7 +78,7 @@ class MenuActivity : ComponentActivity() {
         for (product in productList) {
             val productView = layoutInflater.inflate(R.layout.product_item, null)
 
-            val productName = productView.findViewById<TextView>(R.id.product_name)
+            val productName = productView.findViewById<TextView>(R.id.product_nom)
             val productPrice = productView.findViewById<TextView>(R.id.product_price)
             val productImage = productView.findViewById<ImageView>(R.id.product_image)
             val addButton = productView.findViewById<Button>(R.id.add_button)

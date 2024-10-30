@@ -11,8 +11,6 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import com.example.myapplication.network.Producto
 import com.google.gson.Gson
-import com.google.gson.JsonSyntaxException
-import com.google.gson.reflect.TypeToken
 
 class CarritoActivity : ComponentActivity() {
     private val cart: MutableMap<Producto, Int> = CartManager.cart
@@ -69,7 +67,7 @@ class CarritoActivity : ComponentActivity() {
 
             for ((product, quantity) in cart) {
                 val productView = layoutInflater.inflate(R.layout.carrito_item, productContainer, false)
-                val productName = productView.findViewById<TextView>(R.id.product_name)
+                val productName = productView.findViewById<TextView>(R.id.product_nom)
                 val productPrice = productView.findViewById<TextView>(R.id.product_price)
                 val addButton = productView.findViewById<Button>(R.id.add_button)
                 val subtractButton = productView.findViewById<Button>(R.id.subtract_button)
