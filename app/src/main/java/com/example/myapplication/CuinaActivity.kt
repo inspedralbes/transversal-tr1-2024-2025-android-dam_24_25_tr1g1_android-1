@@ -9,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import com.example.myapplication.CartManager.cart
+import com.example.myapplication.UserManager.user
 import com.example.myapplication.network.BASE_URL
 import com.example.myapplication.network.Interface
 import com.google.gson.Gson
@@ -78,7 +79,7 @@ class CuinaActivity : ComponentActivity() {
         Log.i("Contingut", Gson().toJson(contingut))
         return ComandaManager.ComandaAdd(
             id = 0,
-            client = 1,
+            client = user!!.id,
             contingut = contingut,
             estat = "",
             data = ""

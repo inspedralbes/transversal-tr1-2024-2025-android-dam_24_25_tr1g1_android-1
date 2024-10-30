@@ -13,6 +13,4 @@ class User: ViewModel() {
     var lactosa: Int = 0
     var crustacis: Int = 0
 
-
-
 }

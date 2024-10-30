@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import com.example.myapplication.UserManager.user
 import com.example.myapplication.network.BASE_URL
 import com.example.myapplication.network.Interface
 import kotlinx.coroutines.CoroutineScope
@@ -66,7 +67,7 @@ class HistorialComandesActivity : ComponentActivity() {
 
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                val response = apiService.getComanData()
+                val response = apiService.getComanData(user!!.id.toString())
                 comandsList = response
                 Log.i("HistorialComandesActivity", "Comandes: $comandsList")
                 displayFilteredComandes(false) // Display non-Rebut comandes by default

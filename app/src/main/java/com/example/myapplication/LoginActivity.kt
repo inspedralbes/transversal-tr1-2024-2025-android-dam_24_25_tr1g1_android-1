@@ -43,6 +43,9 @@ class LoginActivity : ComponentActivity() {
 
 
                 user=userData[0]
+
+                UserManager.user = user
+
                 if (user.id != 0) {
 
                     val intent = Intent(this@LoginActivity, MenuActivity::class.java)

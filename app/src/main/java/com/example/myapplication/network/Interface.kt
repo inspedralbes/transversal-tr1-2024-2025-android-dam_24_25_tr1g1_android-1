@@ -2,19 +2,22 @@ package com.example.myapplication.network
 import android.os.Parcelable
 import com.example.myapplication.ComandaManager
 import com.example.myapplication.User
+import com.example.myapplication.UserManager.user
 import kotlinx.parcelize.Parcelize
+import okhttp3.internal.userAgent
 import retrofit2.http.Body
 
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 val BASE_URL = "http://dam.inspedralbes.cat:26968"
 
 interface Interface {
     @GET("/getProd")
     suspend fun getProductData(): List<Producto>
-    @GET("/getComan")
-    suspend fun getComanData(): List<ComandaManager.Comanda>
+    @GET("/getComan/{userId}")
+    suspend fun getComanData(@Path("userId") userId: String): List<ComandaManager.Comanda>
     @POST("/addComan")
     suspend fun addComanda(@Body comanda: ComandaManager.ComandaAdd): Int
 
