@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.example.myapplication.network.BASE_URL
 import com.example.myapplication.network.Interface
 import com.example.myapplication.network.Producto
 import retrofit2.Retrofit
@@ -25,7 +26,7 @@ fun MenuScreen(navController: NavController, cart: MutableList<Producto>) {
     var errorMessage by remember { mutableStateOf<String?>(null) }
 
     val retrofit = Retrofit.Builder()
-        .baseUrl("http://dam.inspedralbes.cat:26968")
+        .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
     val apiService = retrofit.create(Interface::class.java)

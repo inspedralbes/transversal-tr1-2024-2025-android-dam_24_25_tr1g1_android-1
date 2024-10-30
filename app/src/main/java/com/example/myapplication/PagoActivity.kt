@@ -3,6 +3,7 @@ package com.example.myapplication
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import androidx.activity.ComponentActivity
 
 class PagoActivity : ComponentActivity() {
@@ -10,6 +11,8 @@ class PagoActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.pagament)
+
+        findViewById<TextView>(R.id.total_amount).text = CartManager.getTotalPrice().toString() + "€"
 
         val backButton = findViewById<Button>(R.id.back_button)
 

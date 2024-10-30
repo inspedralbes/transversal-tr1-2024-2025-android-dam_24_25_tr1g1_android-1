@@ -11,6 +11,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.example.myapplication.network.BASE_URL
 import com.example.myapplication.network.Producto
 
 @Composable
@@ -22,7 +23,7 @@ fun ProductItem(navController: NavController, product: Producto, cart: MutableLi
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = rememberAsyncImagePainter("http://dam.inspedralbes.cat:26968/" + product.fotoRuta),
+            painter = rememberAsyncImagePainter(BASE_URL + "/" + product.fotoRuta),
             contentDescription = null,
             modifier = Modifier.width(80.dp).height(80.dp),
             contentScale = ContentScale.FillWidth

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.*
 import androidx.activity.ComponentActivity
 import coil.load
+import com.example.myapplication.network.BASE_URL
 import com.example.myapplication.network.Interface
 import com.example.myapplication.network.Producto
 import kotlinx.coroutines.CoroutineScope
@@ -54,7 +55,7 @@ class MenuActivity : ComponentActivity() {
 
     private fun loadProducts() {
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://dam.inspedralbes.cat:26968")
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val apiService = retrofit.create(Interface::class.java)
@@ -92,7 +93,7 @@ class MenuActivity : ComponentActivity() {
             else{
                 productPrice.text = "${product.oferta}€"
             }
-            productImage.load("http://dam.inspedralbes.cat:26968/" + product.fotoRuta)
+            productImage.load(BASE_URL+ "/" + product.fotoRuta)
             productImage.setOnClickListener {
                 productImage.visibility = ImageView.GONE
                 productDesc.visibility = TextView.VISIBLE
@@ -110,8 +111,14 @@ class MenuActivity : ComponentActivity() {
             if (product.crustacis == 1) productView.findViewById<ImageView>(R.id.crustacis_icon).visibility = ImageView.VISIBLE
 
             addButton.setOnClickListener {
-                cart.add(product)
-                Toast.makeText(this, "${product.nom} añadido al carrito", Toast.LENGTH_SHORT).show()
+                if(product.stock > 0){
+                    cart.add(product)
+                    product.stock -= 1
+                Toast.makeText(this, "${product.nom} afegit a la cesta", Toast.LENGTH_SHORT).show()
+                    }
+                else{
+                    Toast.makeText(this, "Producte ${product.nom} en falta de stock", Toast.LENGTH_SHORT).show()
+                }
             }
 
             productsGrid.addView(productView)

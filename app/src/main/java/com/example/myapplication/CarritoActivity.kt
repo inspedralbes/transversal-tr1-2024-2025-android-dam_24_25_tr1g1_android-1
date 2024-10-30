@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import com.example.myapplication.network.Producto
 import com.google.gson.Gson
@@ -61,7 +62,7 @@ class CarritoActivity : ComponentActivity() {
             updateCartView()
             logCartContents()
         }
-
+        //Actualiza la vista del carrito.
         private fun updateCartView() {
             val productContainer = findViewById<LinearLayout>(R.id.product_container)
             productContainer.removeAllViews()
@@ -79,10 +80,15 @@ class CarritoActivity : ComponentActivity() {
                 productQuantity.text = quantity.toString()
 
                 addButton.setOnClickListener {
-                    CartManager.addProduct(product)
-                    saveCartToPreferences(this, cart)
-                    updateCartView()
-                    logCartContents()
+                    if (quantity <= product.stock) {
+                        CartManager.addProduct(product)
+                        saveCartToPreferences(this, cart)
+                        updateCartView()
+                        logCartContents()
+                    }
+                    else {
+                        Toast.makeText(this, "Producte ${product.nom} fora d'stock", Toast.LENGTH_SHORT).show()
+                    }
                 }
 
                 subtractButton.setOnClickListener {
@@ -116,21 +122,4 @@ fun saveCartToPreferences(context: Context, cart: Map<Producto, Int>) {
     val json = gson.toJson(cart)
     editor.putString("cart", json)
     editor.apply()
-}
-
-fun loadCartFromPreferences(context: Context): MutableMap<Producto, Int> {
-    val sharedPreferences = context.getSharedPreferences("cart_prefs", Context.MODE_PRIVATE)
-    val gson = Gson()
-    val json = sharedPreferences.getString("cart", null)
-    val type = object : TypeToken<MutableMap<Producto, Int>>() {}.type
-    return if (json != null) {
-        try {
-            gson.fromJson(json, type)
-        } catch (e: JsonSyntaxException) {
-            // Handle the case where the JSON is not in the expected format
-            mutableMapOf()
-        }
-    } else {
-        mutableMapOf()
-    }
 }

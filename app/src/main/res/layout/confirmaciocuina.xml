@@ -43,16 +43,17 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/text_confirmation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ORDRE REBUDA A CUINA!"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            android:gravity="center"
             android:layout_gravity="center"
             android:layout_marginTop="32dp"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:text="ORDRE REBUDA A CUINA!"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/view_status_button"
