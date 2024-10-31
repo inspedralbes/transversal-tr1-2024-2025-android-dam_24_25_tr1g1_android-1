@@ -26,7 +26,7 @@ class EstatComandaActivity : ComponentActivity() {
 
     super.onCreate(savedInstanceState)
 
-    socket?.on("ChangeComanda", changeComandaStatus)
+    socket?.on("comandaUpdated", changeComandaStatus)
     setContentView(R.layout.estado_orden)
 
     val comandaId = intent.getIntExtra("comanda_id", -1)

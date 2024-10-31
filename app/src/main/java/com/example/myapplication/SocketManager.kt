@@ -10,9 +10,11 @@ object SocketManager {
 
     init {
         socket = IO.socket("http://dam.inspedralbes.cat:26968")
+        println("Socket initialized")
     }
 
     fun onCreate(savedInstanceState: Bundle?) {
         socket?.connect();
+        println(socket)
     }
 }

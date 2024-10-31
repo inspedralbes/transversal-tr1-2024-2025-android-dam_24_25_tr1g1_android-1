@@ -39,9 +39,10 @@ class LoginActivity : ComponentActivity() {
             }
 
             lifecycleScope.launch {
+                try {
                 val userData = apiService.loginUser(user = user)
 
-
+                println(userData)
                 user=userData[0]
 
                 UserManager.user = user
@@ -54,6 +55,9 @@ class LoginActivity : ComponentActivity() {
                 } else {
                     Toast.makeText(this@LoginActivity, "Error: Tu Server", Toast.LENGTH_LONG).show()
                 }
+                    } catch (e: Exception) {
+                        Toast.makeText(this@LoginActivity, "Error: credencials incorrectes", Toast.LENGTH_LONG).show()
+                    }
             }
 
 
