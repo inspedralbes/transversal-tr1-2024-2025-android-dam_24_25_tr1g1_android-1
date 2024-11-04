@@ -20,18 +20,15 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
+var comandaId: Int? = null
 
 class EstatComandaActivity : ComponentActivity() {
     var socket= SocketManager.socket
     val changeComandaStatus = Emitter.Listener { args ->
         val data = args
-//        comandsList = comandsList.map {
-//            if (it.id == data[0]) {
-//                it.estat = data[1].toString()
-//            }
-//            it
-//        }
-//        loadComanda()
+        println("hi! ${comandaId.toString()}")
+        loadOneComanda(comandaId.toString())
+
     }
 
     private lateinit var contingutComanda: List<ComandaManager.Contingut>
@@ -45,7 +42,7 @@ class EstatComandaActivity : ComponentActivity() {
     socket?.on("comandaUpdated", changeComandaStatus)
     setContentView(R.layout.estado_orden)
 
-    val comandaId = intent.getIntExtra("comanda_id", -1)
+    comandaId = intent.getIntExtra("comanda_id", -1)
     val comandaEstat = intent.getStringExtra("comanda_estat")
 
     val comandaIdTextView = findViewById<TextView>(R.id.id_comanda)
@@ -65,7 +62,7 @@ class EstatComandaActivity : ComponentActivity() {
             confirmacioLinearLayout.visibility = View.VISIBLE
         }
         confrimarComandaButtonTrue.setOnClickListener {
-            cancelComanda(comandaId)
+            cancelComanda(comandaId!!)
             confirmacioLinearLayout.visibility = View.GONE
         }
         confrimarComandaButtonFalse.setOnClickListener {

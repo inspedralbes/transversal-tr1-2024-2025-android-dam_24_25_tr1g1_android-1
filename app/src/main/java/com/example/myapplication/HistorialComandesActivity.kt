@@ -29,6 +29,7 @@ class HistorialComandesActivity : ComponentActivity() {
         val data = args[0] as JSONObject
         val id = data.getInt("id")
         val estat = data.getString("estat")
+        println("EJOA")
         comandsList = comandsList.map {
             if (it.id == id) {
                 it.estat = estat
