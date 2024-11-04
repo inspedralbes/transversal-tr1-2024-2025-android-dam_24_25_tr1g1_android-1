@@ -13,15 +13,12 @@ import androidx.activity.ComponentActivity
 import com.example.myapplication.UserManager.user
 import com.example.myapplication.network.BASE_URL
 import com.example.myapplication.network.Interface
-import io.socket.client.IO;
-import io.socket.client.Socket;
 import io.socket.emitter.Emitter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import com.example.myapplication.SocketManager
 import org.json.JSONObject
 
 
