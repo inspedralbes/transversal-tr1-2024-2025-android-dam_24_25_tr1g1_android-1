@@ -39,6 +39,12 @@ interface Interface {
         @Body user: User
     ): List<User>
 
+    @PUT("/modUser/{Id}")
+    suspend fun updateUser(
+        @Path("Id") id: String,
+        @Body data: Map<String, String>
+    )
+
     @POST("/login")
     suspend fun loginUser(
         @Body user: User
