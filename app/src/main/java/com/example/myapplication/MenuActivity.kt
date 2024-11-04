@@ -23,10 +23,15 @@ class MenuActivity : ComponentActivity() {
     private lateinit var exitButton: Button
     private val cart = mutableListOf<Producto>()
 
+    var socket= SocketManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.menu)
 
+        if(!socket.connected){
+         socket.connectSocket()
+        }
         productsGrid = findViewById(R.id.products_grid)
         cartButton = findViewById(R.id.cart_button)
         userButton = findViewById(R.id.user_button)

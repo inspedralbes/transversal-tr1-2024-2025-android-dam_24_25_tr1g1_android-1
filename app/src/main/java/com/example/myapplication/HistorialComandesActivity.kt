@@ -40,10 +40,9 @@ class HistorialComandesActivity : ComponentActivity() {
         loadComandes()
     }
     var socket= SocketManager.socket
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        socket?.connect()
+
         socket?.on("comandaUpdated", changeComandaStatus)
         setContentView(R.layout.historialcomandes)
         loadComandes()
