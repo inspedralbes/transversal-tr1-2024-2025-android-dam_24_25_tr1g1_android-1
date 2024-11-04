@@ -19,9 +19,10 @@ import com.example.myapplication.network.Interface
 import com.example.myapplication.network.Producto
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+var products by mutableStateOf<List<Producto>?>(null)
+
 @Composable
 fun MenuScreen(navController: NavController, cart: MutableList<Producto>) {
-    var products by remember { mutableStateOf<List<Producto>?>(null) }
     var isLoading by remember { mutableStateOf(true) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
 

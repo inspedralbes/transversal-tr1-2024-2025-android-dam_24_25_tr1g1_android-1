@@ -5,21 +5,32 @@ import com.example.myapplication.User
 import com.example.myapplication.UserManager.user
 import kotlinx.parcelize.Parcelize
 import okhttp3.internal.userAgent
+import org.json.JSONObject
 import retrofit2.http.Body
 
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
-val BASE_URL = "http://dam.inspedralbes.cat:26968"
+val BASE_URL = "http://pregrillgrab.dam.inspedralbes.cat:26968"
 
 interface Interface {
+    //GET tots els productes
     @GET("/getProd")
     suspend fun getProductData(): List<Producto>
-    @GET("/getComan/{userId}")
+    //GET productes per client
+    @GET("/getComanClient/{userId}")
     suspend fun getComanData(@Path("userId") userId: String): List<ComandaManager.Comanda>
+    //GET Contingut de una comanda
+    @GET("/getComanContent/{Id}")
+    suspend fun getComanDataOne(@Path("Id") userId: String): List<ComandaManager.Contingut>
+    //POST afegir nova comanda
     @POST("/addComan")
     suspend fun addComanda(@Body comanda: ComandaManager.ComandaAdd): Int
+    //PUT UPDATE estat de la comanda
+    @PUT("/modComan/{Id}")
+    suspend fun deleteConmanda(@Path("Id") id: String, @Body data: Map<String, String>)
 
     @POST("/addUser")
     suspend fun registerUser(

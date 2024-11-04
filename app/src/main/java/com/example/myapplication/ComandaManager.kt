@@ -4,6 +4,7 @@ import com.google.gson.annotations.JsonAdapter
 
 
 object ComandaManager {
+
     data class Comanda(
         val id: Int,
         val data: String?,
