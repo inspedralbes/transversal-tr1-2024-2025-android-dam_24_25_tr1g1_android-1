@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -12,15 +13,12 @@ import androidx.activity.ComponentActivity
 import com.example.myapplication.UserManager.user
 import com.example.myapplication.network.BASE_URL
 import com.example.myapplication.network.Interface
-import io.socket.client.IO;
-import io.socket.client.Socket;
 import io.socket.emitter.Emitter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import com.example.myapplication.SocketManager
 import org.json.JSONObject
 
 
@@ -40,6 +38,8 @@ class HistorialComandesActivity : ComponentActivity() {
         loadComandes()
     }
     var socket= SocketManager.socket
+
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -47,7 +47,7 @@ class HistorialComandesActivity : ComponentActivity() {
         setContentView(R.layout.historialcomandes)
         loadComandes()
 
-        val backToUserButton = findViewById<Button>(R.id.back_to_profile_button)
+        val backToUserButton = findViewById<Button>(R.id.back_to_user_button)
         backToUserButton.setOnClickListener {
             val intent = Intent(this, UserActivity::class.java)
             startActivity(intent)
@@ -123,12 +123,12 @@ class HistorialComandesActivity : ComponentActivity() {
             comandesContainer.addView(comandaView)
         }
     }
-
+//filtrat de comandes. A Antigues es mostren les comandes rebutjades o recollides (Recollit i Cancel·lada), a Actuals les que no ho estan.
     private fun displayFilteredComandes(showRebut: Boolean) {
         val filteredComandes = if (showRebut) {
-            comandsList.filter { it.estat.equals("Recollit", ignoreCase = true) }
+            comandsList.filter { it.estat.equals("Recollit", ignoreCase = true)}
         } else {
-            comandsList.filter { !it.estat.equals("Recollit", ignoreCase = true) }
+            comandsList.filter { !it.estat.equals("Recollit", ignoreCase = true) && !it.estat.equals("Cancel·lada", ignoreCase = true) }
         }
         displayComandes(filteredComandes)
     }
