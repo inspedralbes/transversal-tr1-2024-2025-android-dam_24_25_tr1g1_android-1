@@ -51,6 +51,9 @@ android {
 }
 
 dependencies {
+    implementation("io.socket:socket.io-client:2.0.0") {
+        exclude(group = "org.json", module = "json")
+    }
     implementation ("androidx.navigation:navigation-compose:2.5.3")
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")

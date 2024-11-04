@@ -1,6 +1,5 @@
 package com.example.myapplication
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -13,23 +12,42 @@ import androidx.activity.ComponentActivity
 import com.example.myapplication.UserManager.user
 import com.example.myapplication.network.BASE_URL
 import com.example.myapplication.network.Interface
+import io.socket.client.IO;
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import com.example.myapplication.SocketManager
+import org.json.JSONObject
+
 
 class HistorialComandesActivity : ComponentActivity() {
 
     private lateinit var comandsList: List<ComandaManager.Comanda>
-
-    @SuppressLint("MissingInflatedId")
+    val changeComandaStatus = Emitter.Listener { args ->
+        val data = args[0] as JSONObject
+        val id = data.getInt("id")
+        val estat = data.getString("estat")
+        comandsList = comandsList.map {
+            if (it.id == id) {
+                it.estat = estat
+            }
+            it
+        }
+        loadComandes()
+    }
+    var socket= SocketManager.socket
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        socket?.on("comandaUpdated", changeComandaStatus)
         setContentView(R.layout.historialcomandes)
         loadComandes()
 
-        val backToUserButton = findViewById<Button>(R.id.back_to_user_button)
+        val backToUserButton = findViewById<Button>(R.id.back_to_profile_button)
         backToUserButton.setOnClickListener {
             val intent = Intent(this, UserActivity::class.java)
             startActivity(intent)
@@ -105,12 +123,12 @@ class HistorialComandesActivity : ComponentActivity() {
             comandesContainer.addView(comandaView)
         }
     }
-//filtrat de comandes. A Antigues es mostren les comandes rebutjades o recollides (Recollit i Cancel·lada), a Actuals les que no ho estan.
+
     private fun displayFilteredComandes(showRebut: Boolean) {
         val filteredComandes = if (showRebut) {
-            comandsList.filter { it.estat.equals("Recollit", ignoreCase = true)}
+            comandsList.filter { it.estat.equals("Recollit", ignoreCase = true) }
         } else {
-            comandsList.filter { !it.estat.equals("Recollit", ignoreCase = true) && !it.estat.equals("Cancel·lada", ignoreCase = true) }
+            comandsList.filter { !it.estat.equals("Recollit", ignoreCase = true) }
         }
         displayComandes(filteredComandes)
     }

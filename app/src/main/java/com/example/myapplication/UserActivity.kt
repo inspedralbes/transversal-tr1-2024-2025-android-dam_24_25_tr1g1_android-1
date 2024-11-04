@@ -6,7 +6,7 @@ import android.widget.Button
 import androidx.activity.ComponentActivity
 
 class UserActivity : ComponentActivity() {
-
+    var socket= SocketManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.perfil)
@@ -35,6 +35,8 @@ class UserActivity : ComponentActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             CartManager.clearCart()
+            UserManager.clearUser()
+            socket.disconnectSocket()
             finish()
         }
     }

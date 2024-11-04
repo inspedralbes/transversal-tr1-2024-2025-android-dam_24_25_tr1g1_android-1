@@ -10,8 +10,9 @@ object ComandaManager {
         val data: String?,
         @JsonAdapter(ContingutDeserializer::class)
         val contingut: List<Contingut>?,
-        val estat: String,
+        var estat: String,
         val client: Int
+
     )
 
     data class Contingut(
