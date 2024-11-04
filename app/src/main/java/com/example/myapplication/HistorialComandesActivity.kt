@@ -108,7 +108,7 @@ class HistorialComandesActivity : ComponentActivity() {
 //filtrat de comandes. A Antigues es mostren les comandes rebutjades o recollides (Recollit i Cancel·lada), a Actuals les que no ho estan.
     private fun displayFilteredComandes(showRebut: Boolean) {
         val filteredComandes = if (showRebut) {
-            comandsList.filter { it.estat.equals("Recollit", ignoreCase = true) ||  it.estat.equals("Cancel·lada", ignoreCase = true)}
+            comandsList.filter { it.estat.equals("Recollit", ignoreCase = true)}
         } else {
             comandsList.filter { !it.estat.equals("Recollit", ignoreCase = true) && !it.estat.equals("Cancel·lada", ignoreCase = true) }
         }
