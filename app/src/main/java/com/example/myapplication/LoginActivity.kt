@@ -47,13 +47,13 @@ class LoginActivity : ComponentActivity() {
 
                 UserManager.user = user
 
-                if (user.id != 0) {
+                if (user.id != -1) {
 
                     val intent = Intent(this@LoginActivity, MenuActivity::class.java)
                     startActivity(intent)
                     finish()
                 } else {
-                    Toast.makeText(this@LoginActivity, "Error: Tu Server", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@LoginActivity, "Error: Usuari o contrasenya incorrectes", Toast.LENGTH_LONG).show()
                 }
                     } catch (e: Exception) {
                         Toast.makeText(this@LoginActivity, "Error: credencials incorrectes", Toast.LENGTH_LONG).show()
