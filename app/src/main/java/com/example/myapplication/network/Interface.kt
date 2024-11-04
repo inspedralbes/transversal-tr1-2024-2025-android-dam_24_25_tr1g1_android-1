@@ -22,6 +22,8 @@ interface Interface {
     //GET productes per client
     @GET("/getComanClient/{userId}")
     suspend fun getComanData(@Path("userId") userId: String): List<ComandaManager.Comanda>
+    @GET("/getComan/{id}")
+    suspend fun getOneComan(@Path("id") id: String): List<ComandaManager.Comanda>
     //GET Contingut de una comanda
     @GET("/getComanContent/{Id}")
     suspend fun getComanDataOne(@Path("Id") userId: String): List<ComandaManager.Contingut>

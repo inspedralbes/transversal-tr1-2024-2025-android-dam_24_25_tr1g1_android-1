@@ -21,6 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 var comandaId: Int? = null
+var comandaEstat: String? = null
 
 class EstatComandaActivity : ComponentActivity() {
     var socket= SocketManager.socket
@@ -28,13 +29,13 @@ class EstatComandaActivity : ComponentActivity() {
         val data = args
         println("hi! ${comandaId.toString()}")
         loadOneComanda(comandaId.toString())
-
+        loadInfoComanda(comandaId.toString())
     }
 
     private lateinit var contingutComanda: List<ComandaManager.Contingut>
 
 
-    @SuppressLint("MissingInflatedId", "SuspiciousIndentation")
+    @SuppressLint("MissingInflatedId", "SuspiciousIndentation", "WrongViewCast")
    override fun onCreate(savedInstanceState: Bundle?) {
 
     super.onCreate(savedInstanceState)
@@ -43,7 +44,7 @@ class EstatComandaActivity : ComponentActivity() {
     setContentView(R.layout.estado_orden)
 
     comandaId = intent.getIntExtra("comanda_id", -1)
-    val comandaEstat = intent.getStringExtra("comanda_estat")
+        Log.i("Num Comanda", comandaId.toString())
 
     val comandaIdTextView = findViewById<TextView>(R.id.id_comanda)
     val comandaEstatTextView = findViewById<TextView>(R.id.estat_comanda)
@@ -53,10 +54,12 @@ class EstatComandaActivity : ComponentActivity() {
     val confirmacioLinearLayout = findViewById<LinearLayout>(R.id.confirmacio)
 
         loadOneComanda(comandaId.toString())
-    comandaIdTextView.text = "Ordre   #$comandaId"
-    comandaEstatTextView.text = "Estat: $comandaEstat"
-    cancelComandaButton.visibility = if (comandaEstat == "Rebut") View.VISIBLE else View.GONE
-    confirmacioLinearLayout.visibility = View.GONE
+        loadInfoComanda(comandaId.toString())
+
+        comandaIdTextView.text = "Ordre #$comandaId"
+        comandaEstatTextView.text = "Estat: $comandaEstat"
+        cancelComandaButton.visibility = if (comandaEstat == "Rebut") View.VISIBLE else View.GONE
+        confirmacioLinearLayout.visibility = View.GONE
 
         cancelComandaButton.setOnClickListener {
             confirmacioLinearLayout.visibility = View.VISIBLE
@@ -86,7 +89,7 @@ class EstatComandaActivity : ComponentActivity() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val response = apiService.getComanDataOne(comandaId) // el contingut de la comanda
-                Log.i("Comanda" + comandaId, response.toString())
+                Log.i("Comanda Content " + comandaId, response.toString())
                 contingutComanda = response
                 updateContingutComandaView()
             } catch (e: Exception) {
@@ -95,6 +98,29 @@ class EstatComandaActivity : ComponentActivity() {
             }
         }
     }
+
+    private fun loadInfoComanda(comandaId: String) {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val apiService = retrofit.create(Interface::class.java)
+
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val response = apiService.getOneComan(comandaId)
+                Log.i("Comanda Status " + comandaId, response[0].estat)
+                comandaEstat = response[0].estat
+                Log.i("Comanda new Status " + comandaId, comandaEstat.toString())
+                val comandaEstatTextView = findViewById<TextView>(R.id.estat_comanda)
+                comandaEstatTextView.text = "Estat: $comandaEstat"
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(this@EstatComandaActivity, "Error al cargar les comandes", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
     @SuppressLint("MissingInflatedId")
     private fun updateContingutComandaView() {
         val llistatProductes = findViewById<LinearLayout>(R.id.llistat_productes)
@@ -129,7 +155,7 @@ class EstatComandaActivity : ComponentActivity() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val response = apiService.deleteConmanda(comandaId.toString(), mapOf("estat" to "Cancel·lada"))
-                Log.i("Comanda" + comandaId, response.toString())
+                Log.i("delete","Comanda " + comandaId + " esborrada")
             } catch (e: Exception) {
                 e.printStackTrace()
                 Toast.makeText(this@EstatComandaActivity, "Error al cancel·lar la comanda", Toast.LENGTH_LONG).show()
