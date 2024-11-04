@@ -26,17 +26,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            MyApplicationTheme {
-                val navController = rememberNavController()
-                val cart = remember { mutableStateListOf<Producto>() }
-                NavHost(navController = navController, startDestination = "menu") {
-                    composable("menu") { MenuScreen(navController,cart) }
-                    composable("cart") { CartScreen(navController, cart) }
-                    composable("description") {Description(navController, cart)
-                    }
-
-                }
-            }
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -46,7 +35,6 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-    //Función para cargar la pantalla de inicio
     @Composable
     fun ShowXmlLayout(modifier: Modifier = Modifier) {
         AndroidView(
