@@ -31,8 +31,8 @@ interface Interface {
     @POST("/addComan")
     suspend fun addComanda(@Body comanda: ComandaManager.ComandaAdd): Int
     //PUT UPDATE estat de la comanda
-    @PUT("/modComan/{Id}")
-    suspend fun deleteConmanda(@Path("Id") id: String, @Body data: Map<String, String>)
+    @PUT("/delComan/{Id}")
+    suspend fun deleteConmanda(@Path("Id") id: String)
 
     @POST("/addUser")
     suspend fun registerUser(
