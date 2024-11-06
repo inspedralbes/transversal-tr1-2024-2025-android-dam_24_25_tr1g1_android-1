@@ -23,13 +23,15 @@ import retrofit2.converter.gson.GsonConverterFactory
 var comandaId: Int? = null
 var comandaEstat: String? = null
 
+
+
 class EstatComandaActivity : ComponentActivity() {
+
     var socket= SocketManager.socket
     val changeComandaStatus = Emitter.Listener { args ->
         val data = args
         println("hi! ${comandaId.toString()}")
-        loadOneComanda(comandaId.toString())
-        loadInfoComanda(comandaId.toString())
+        onCreate(Bundle())
     }
 
     private lateinit var contingutComanda: List<ComandaManager.Contingut>
@@ -46,31 +48,17 @@ class EstatComandaActivity : ComponentActivity() {
     comandaId = intent.getIntExtra("comanda_id", -1)
         Log.i("Num Comanda", comandaId.toString())
 
-    val comandaIdTextView = findViewById<TextView>(R.id.id_comanda)
-    val comandaEstatTextView = findViewById<TextView>(R.id.estat_comanda)
-    val cancelComandaButton = findViewById<Button>(R.id.cancel_comanda_button)
-    val confrimarComandaButtonTrue = findViewById<Button>(R.id.confirmation_true_button)
-    val confrimarComandaButtonFalse = findViewById<Button>(R.id.confirmation_false_button)
-    val confirmacioLinearLayout = findViewById<LinearLayout>(R.id.confirmacio)
-
         loadOneComanda(comandaId.toString())
         loadInfoComanda(comandaId.toString())
 
+    val comandaIdTextView = findViewById<TextView>(R.id.id_comanda)
+    val comandaEstatTextView = findViewById<TextView>(R.id.estat_comanda)
+
+        buttonCancel()
+
         comandaIdTextView.text = "Ordre #$comandaId"
         comandaEstatTextView.text = "Estat: $comandaEstat"
-        cancelComandaButton.visibility = if (comandaEstat == "Rebut") View.VISIBLE else View.GONE
-        confirmacioLinearLayout.visibility = View.GONE
-
-        cancelComandaButton.setOnClickListener {
-            confirmacioLinearLayout.visibility = View.VISIBLE
-        }
-        confrimarComandaButtonTrue.setOnClickListener {
-            cancelComanda(comandaId!!)
-            confirmacioLinearLayout.visibility = View.GONE
-        }
-        confrimarComandaButtonFalse.setOnClickListener {
-            confirmacioLinearLayout.visibility = View.GONE
-        }
+        Log.i("Estat: ", comandaEstat.toString())
 
     val backToHistoryButton = findViewById<Button>(R.id.back_to_history_button)
        backToHistoryButton.setOnClickListener {
@@ -114,6 +102,9 @@ class EstatComandaActivity : ComponentActivity() {
                 Log.i("Comanda new Status " + comandaId, comandaEstat.toString())
                 val comandaEstatTextView = findViewById<TextView>(R.id.estat_comanda)
                 comandaEstatTextView.text = "Estat: $comandaEstat"
+
+                // Llama a buttonCancel() después de actualizar el estado
+                buttonCancel()
             } catch (e: Exception) {
                 e.printStackTrace()
                 Toast.makeText(this@EstatComandaActivity, "Error al cargar les comandes", Toast.LENGTH_LONG).show()
@@ -154,12 +145,38 @@ class EstatComandaActivity : ComponentActivity() {
 
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                val response = apiService.deleteConmanda(comandaId.toString(), mapOf("estat" to "Cancel·lada"))
+                val response = apiService.deleteConmanda(comandaId.toString())
                 Log.i("delete","Comanda " + comandaId + " esborrada")
+                Toast.makeText(this@EstatComandaActivity, "Comanda " + comandaId + " cancel·lada", Toast.LENGTH_LONG).show()
             } catch (e: Exception) {
                 e.printStackTrace()
                 Toast.makeText(this@EstatComandaActivity, "Error al cancel·lar la comanda", Toast.LENGTH_LONG).show()
             }
         }
     }
+        private fun buttonCancel() {
+            val cancelComandaButton = findViewById<Button>(R.id.cancel_comanda_button)
+            val confrimarComandaButtonTrue = findViewById<Button>(R.id.confirmation_true_button)
+            val confrimarComandaButtonFalse = findViewById<Button>(R.id.confirmation_false_button)
+            val confirmacioLinearLayout = findViewById<LinearLayout>(R.id.confirmacio)
+            Log.i("Log", "Escuchame")
+
+            // Actualiza la visibilidad del botón de cancelar basado en el estado de la comanda
+            cancelComandaButton.visibility = if (comandaEstat == "Rebut") View.VISIBLE else View.GONE
+            confirmacioLinearLayout.visibility = View.GONE
+
+            cancelComandaButton.setOnClickListener {
+                confirmacioLinearLayout.visibility = View.VISIBLE
+            }
+            confrimarComandaButtonTrue.setOnClickListener {
+                cancelComanda(comandaId!!)
+                confirmacioLinearLayout.visibility = View.GONE
+                val intent = Intent(this, HistorialComandesActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            confrimarComandaButtonFalse.setOnClickListener {
+                confirmacioLinearLayout.visibility = View.GONE
+            }
+        }
 }

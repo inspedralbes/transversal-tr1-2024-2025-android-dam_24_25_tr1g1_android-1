@@ -11,7 +11,8 @@ object ComandaManager {
         @JsonAdapter(ContingutDeserializer::class)
         val contingut: List<Contingut>?,
         var estat: String,
-        val client: Int
+        val client: Int,
+        val cancel: Int
 
     )
 
@@ -26,8 +27,10 @@ object ComandaManager {
         val id: Int,
         val data: String?,
         val contingut: List<ContingutAdd>,
+        val preuComanda: Float,
         val estat: String,
-        val client: Int
+        val client: Int,
+        val cancel: Int
     )
 
     data class ContingutAdd(

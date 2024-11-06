@@ -2,10 +2,7 @@ package com.example.myapplication.network
 import android.os.Parcelable
 import com.example.myapplication.ComandaManager
 import com.example.myapplication.User
-import com.example.myapplication.UserManager.user
 import kotlinx.parcelize.Parcelize
-import okhttp3.internal.userAgent
-import org.json.JSONObject
 import retrofit2.http.Body
 
 import retrofit2.http.GET
@@ -31,8 +28,10 @@ interface Interface {
     @POST("/addComan")
     suspend fun addComanda(@Body comanda: ComandaManager.ComandaAdd): Int
     //PUT UPDATE estat de la comanda
-    @PUT("/modComan/{Id}")
-    suspend fun deleteConmanda(@Path("Id") id: String, @Body data: Map<String, String>)
+    @PUT("/delComan/{Id}")
+    suspend fun deleteConmanda(@Path("Id") id: String)
+    @PUT("/stockProd/{Id}")
+    suspend fun updateStockProd(@Path("Id") id: String, @Body stock: Map<String, Int>)
 
     @POST("/addUser")
     suspend fun registerUser(

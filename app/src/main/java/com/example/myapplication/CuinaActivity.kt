@@ -31,7 +31,7 @@ class CuinaActivity : ComponentActivity() {
         // Agrega una nueva comanda y actualiza el texto de confirmación
         addComanda { comanId ->
             textConfirmation.text = "ORDRE #$comanId REBUDA A CUINA!"
-            CartManager.clearCart()
+            updateStockForCartItems()
         }
 
         //Si no se puede enviar la comanda, muestra un mensaje de error
@@ -81,8 +81,29 @@ class CuinaActivity : ComponentActivity() {
             id = 0,
             client = user!!.id,
             contingut = contingut,
+            preuComanda = cart.entries.sumByDouble { (it.key.preu * it.value).toDouble() }.toFloat(),
             estat = "",
-            data = ""
+            data = "",
+            cancel = 0
         )
+    }
+    private fun updateStockForCartItems() {
+        Log.i("Stock", "Presiento que me engañas")
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val apiService = retrofit.create(Interface::class.java)
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                cart.forEach { (producto, cantidad) ->
+                    apiService.updateStockProd(producto.id.toString(), mapOf("stock" to cantidad)) }
+                CartManager.clearCart()
+                Log.i("Stock", "Stock actualizado")
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(this@CuinaActivity, "Error al actualizar el stock", Toast.LENGTH_LONG).show()
+            }
+        }
     }
 }
