@@ -67,29 +67,6 @@ class EstatComandaActivity : ComponentActivity() {
         finish()
     }
 }
-    private fun buttonCancel(){
-        val cancelComandaButton = findViewById<Button>(R.id.cancel_comanda_button)
-        val confrimarComandaButtonTrue = findViewById<Button>(R.id.confirmation_true_button)
-        val confrimarComandaButtonFalse = findViewById<Button>(R.id.confirmation_false_button)
-        val confirmacioLinearLayout = findViewById<LinearLayout>(R.id.confirmacio)
-        Log.i("Log","Escuchame")
-        cancelComandaButton.visibility = if (comandaEstat.toString() == "Rebut") View.VISIBLE else View.GONE
-        confirmacioLinearLayout.visibility = View.GONE
-
-        cancelComandaButton.setOnClickListener {
-            confirmacioLinearLayout.visibility = View.VISIBLE
-        }
-        confrimarComandaButtonTrue.setOnClickListener {
-            cancelComanda(comandaId!!)
-            confirmacioLinearLayout.visibility = View.GONE
-            val intent = Intent(this, HistorialComandesActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-        confrimarComandaButtonFalse.setOnClickListener {
-            confirmacioLinearLayout.visibility = View.GONE
-        }
-    }
     private fun loadOneComanda(comandaId: String) {
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -125,6 +102,9 @@ class EstatComandaActivity : ComponentActivity() {
                 Log.i("Comanda new Status " + comandaId, comandaEstat.toString())
                 val comandaEstatTextView = findViewById<TextView>(R.id.estat_comanda)
                 comandaEstatTextView.text = "Estat: $comandaEstat"
+
+                // Llama a buttonCancel() después de actualizar el estado
+                buttonCancel()
             } catch (e: Exception) {
                 e.printStackTrace()
                 Toast.makeText(this@EstatComandaActivity, "Error al cargar les comandes", Toast.LENGTH_LONG).show()
@@ -174,4 +154,29 @@ class EstatComandaActivity : ComponentActivity() {
             }
         }
     }
+        private fun buttonCancel() {
+            val cancelComandaButton = findViewById<Button>(R.id.cancel_comanda_button)
+            val confrimarComandaButtonTrue = findViewById<Button>(R.id.confirmation_true_button)
+            val confrimarComandaButtonFalse = findViewById<Button>(R.id.confirmation_false_button)
+            val confirmacioLinearLayout = findViewById<LinearLayout>(R.id.confirmacio)
+            Log.i("Log", "Escuchame")
+
+            // Actualiza la visibilidad del botón de cancelar basado en el estado de la comanda
+            cancelComandaButton.visibility = if (comandaEstat == "Rebut") View.VISIBLE else View.GONE
+            confirmacioLinearLayout.visibility = View.GONE
+
+            cancelComandaButton.setOnClickListener {
+                confirmacioLinearLayout.visibility = View.VISIBLE
+            }
+            confrimarComandaButtonTrue.setOnClickListener {
+                cancelComanda(comandaId!!)
+                confirmacioLinearLayout.visibility = View.GONE
+                val intent = Intent(this, HistorialComandesActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            confrimarComandaButtonFalse.setOnClickListener {
+                confirmacioLinearLayout.visibility = View.GONE
+            }
+        }
 }
