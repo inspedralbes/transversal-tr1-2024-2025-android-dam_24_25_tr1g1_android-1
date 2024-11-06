@@ -30,13 +30,16 @@ class HistorialComandesActivity : ComponentActivity() {
         val id = data.getInt("id")
         val estat = data.getString("estat")
         println("EJOA")
+        Log.i("HistorialComandesActivity", "Comanda $id updated to $estat")
         comandsList = comandsList.map {
             if (it.id == id) {
                 it.estat = estat
             }
             it
         }
-        loadComandes()
+        runOnUiThread {
+            displayFilteredComandes(false)
+        }
     }
 
 
