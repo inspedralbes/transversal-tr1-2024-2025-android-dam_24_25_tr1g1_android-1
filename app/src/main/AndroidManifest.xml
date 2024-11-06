@@ -65,10 +65,6 @@
             android:name=".EstatComandaActivity"
             android:exported="true"
             android:label="Estat de la comanda" />
-        <activity
-            android:name=".DetalleProductoActivity"
-            android:exported="true"
-            android:label="Detalle del producto" />
     </application>
 
 </manifest>

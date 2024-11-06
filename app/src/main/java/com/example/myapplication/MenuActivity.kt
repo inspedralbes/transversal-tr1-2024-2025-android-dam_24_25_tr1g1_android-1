@@ -2,15 +2,18 @@ package com.example.myapplication
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.*
 import androidx.activity.ComponentActivity
 import coil.load
 import com.example.myapplication.network.BASE_URL
 import com.example.myapplication.network.Interface
 import com.example.myapplication.network.Producto
+import io.socket.emitter.Emitter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -22,15 +25,21 @@ class MenuActivity : ComponentActivity() {
     private lateinit var exitButton: Button
     private val cart = mutableListOf<Producto>()
 
-    var socket= SocketManager
+    var socket= SocketManager.socket
+
+    val changeProductesStatus = Emitter.Listener { args ->
+
+        setupButtonListeners()
+        loadProducts()
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.menu)
 
-        if(!socket.connected){
-         socket.connectSocket()
-        }
+        socket!!.on("productesUpdated", changeProductesStatus)
+
         productsGrid = findViewById(R.id.products_grid)
         cartButton = findViewById(R.id.cart_button)
         userButton = findViewById(R.id.user_button)
