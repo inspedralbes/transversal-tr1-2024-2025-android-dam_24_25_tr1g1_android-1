@@ -1,5 +1,6 @@
-package com.example.myapplication
+package com.example .myapplication
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +17,8 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 
 class MenuActivity : ComponentActivity() {
 
@@ -23,7 +26,8 @@ class MenuActivity : ComponentActivity() {
     private lateinit var cartButton: ImageView
     private lateinit var userButton: ImageView
     private lateinit var exitButton: Button
-    private val cart = mutableListOf<Producto>()
+    private lateinit var numberOfProducts: TextView
+    private val cart = MutableLiveData<MutableList<Producto>>(mutableListOf())
 
     var socket= SocketManager.socket
 
@@ -33,7 +37,40 @@ class MenuActivity : ComponentActivity() {
         loadProducts()
 
     }
+    fun showOrHideCartButton(){
+        println(cart.value)
+        if(cart.value?.size ?: 0 > 0){
+            cartButton.visibility = ImageView.VISIBLE
+            numberOfProducts.visibility = TextView.VISIBLE
+            println("This is cart from the intent " +  cart.value)
+            numberOfProducts.text = cart.value?.size.toString()
+        }
+        else{
+            cartButton.visibility = ImageView.GONE
+            numberOfProducts.visibility = TextView.GONE
+        }
+    }
+    override fun onResume() {
+        super.onResume()
+        val cart: MutableMap<Producto, Int> = CartManager.cart
+        println("This is cart from CartManager "+cart)
+        if (cart.isNotEmpty()) {
+            this.cart.value = cart.keys.toMutableList()
+        }
+        else{
+            this.cart.value = mutableListOf()
+        }
+        showOrHideCartButton()
 
+        numberOfProducts.text = calculateNumberOfProducts(cart).toString()
+    }
+    private fun calculateNumberOfProducts(cart:MutableMap<Producto, Int>): Int {
+        var total = 0
+        cart.forEach { product ->
+            total += product.value
+        }
+        return total
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.menu)
@@ -44,9 +81,10 @@ class MenuActivity : ComponentActivity() {
         cartButton = findViewById(R.id.cart_button)
         userButton = findViewById(R.id.user_button)
         exitButton = findViewById(R.id.exit_button)
-
+        numberOfProducts = findViewById(R.id.numberOfProducts)
         setupButtonListeners()
         loadProducts()
+
     }
 
     private fun setupButtonListeners() {
@@ -57,8 +95,9 @@ class MenuActivity : ComponentActivity() {
 
         cartButton.setOnClickListener {
             val intent = Intent(this, CarritoActivity::class.java)
-            intent.putParcelableArrayListExtra("cart", ArrayList(cart))
+            intent.putParcelableArrayListExtra("cart", ArrayList(cart.value))
             startActivity(intent)
+
         }
 
         exitButton.setOnClickListener {
@@ -125,14 +164,17 @@ class MenuActivity : ComponentActivity() {
 
             addButton.setOnClickListener {
                 if(product.stock > 0){
-                    cart.add(product)
+                    cart.value?.add(product)
                     product.stock -= 1
-                Toast.makeText(this, "${product.nom} afegit a la cesta", Toast.LENGTH_SHORT).show()
+                    cart.value = cart.value
+                    showOrHideCartButton()
+                Toast.makeText(this, "${product.nom} afegit a la cistella", Toast.LENGTH_SHORT).show()
                     }
                 else{
                     Toast.makeText(this, "Producte ${product.nom} en falta de stock", Toast.LENGTH_SHORT).show()
                 }
             }
+
 
             productsGrid.addView(productView)
         }

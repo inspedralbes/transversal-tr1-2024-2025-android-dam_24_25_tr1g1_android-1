@@ -1,5 +1,7 @@
 package com.example.myapplication
 
+import android.widget.Button
+import android.widget.LinearLayout
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -15,9 +17,12 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.myapplication.network.Producto
 
+
+
 @Composable
 fun CartScreen(navController: NavController, cart: MutableList<Producto>) {
     val productsIdSame = cart.distinctBy { it.id }
+
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
         Text(
             text = "Productes dins la cesta;",
@@ -36,7 +41,7 @@ fun CartScreen(navController: NavController, cart: MutableList<Producto>) {
         items(productsIdSame) { product ->
             val count = cart.count { it.id == product.id }
 
-            ProductCart(product = product, count = count, cart)
+            ProductCart(product = product, count = count, cart, navController = navController)
                 }
             }
         }
@@ -56,7 +61,8 @@ fun CartScreen(navController: NavController, cart: MutableList<Producto>) {
             product: Producto,
             count: Int,
             cart: MutableList<Producto>,
-            modifier: Modifier = Modifier
+            modifier: Modifier = Modifier,
+            navController: NavController
         ) {
             Column(
                 modifier = modifier
@@ -89,7 +95,8 @@ fun CartScreen(navController: NavController, cart: MutableList<Producto>) {
                 ) {
                     Button(
                         onClick = {
-                            cart.remove(product)
+                            manageRemove(product=product, navController = navController, cart)
+
                         },
                         modifier = Modifier
                             .weight(1f)
@@ -118,6 +125,10 @@ fun CartScreen(navController: NavController, cart: MutableList<Producto>) {
                 }
 
             }
+
+        }
+        fun manageRemove(product: Producto, navController: NavController, cart: MutableList<Producto>) {
+            cart.remove(product)
 
         }
 
