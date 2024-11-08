@@ -31,6 +31,7 @@ class CuinaActivity : ComponentActivity() {
         // Agrega una nueva comanda y actualiza el texto de confirmación
         addComanda { comanId ->
             textConfirmation.text = "ORDRE #$comanId REBUDA A CUINA!"
+            CartManager.clearCart()
         }
 
         //Si no se puede enviar la comanda, muestra un mensaje de error

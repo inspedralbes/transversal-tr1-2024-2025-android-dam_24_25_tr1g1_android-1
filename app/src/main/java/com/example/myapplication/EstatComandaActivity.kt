@@ -27,11 +27,15 @@ var comandaEstat: String? = null
 
 class EstatComandaActivity : ComponentActivity() {
 
-    var socket= SocketManager.socket
+    var socket = SocketManager.socket
     val changeComandaStatus = Emitter.Listener { args ->
         val data = args
         println("hi! ${comandaId.toString()}")
-        onCreate(Bundle())
+        runOnUiThread {
+            // Update the UI directly here
+            loadOneComanda(comandaId.toString())
+            loadInfoComanda(comandaId.toString())
+        }
     }
 
     private lateinit var contingutComanda: List<ComandaManager.Contingut>
