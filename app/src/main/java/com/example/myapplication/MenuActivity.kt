@@ -141,7 +141,7 @@ class MenuActivity : ComponentActivity() {
             categoryName.text = category.nom
 
             val gridLayout = layoutInflater.inflate(R.layout.grid_layout, null) as GridLayout
-
+            if(findProductsOnCategory(category, productList)){
             for (product in productList) {
                 if (product.category == category.id) {
                     val productView = layoutInflater.inflate(R.layout.product_item, null)
@@ -202,8 +202,13 @@ class MenuActivity : ComponentActivity() {
 
             mainLayout.addView(categoryView)
             mainLayout.addView(gridLayout)
+            }
         }
     }
 
+    fun findProductsOnCategory(category: Categoria, productList: List<Producto>): Boolean{
+        val found = productList.find { it.category == category.id }
+        return found != null
+    }
 
 }
