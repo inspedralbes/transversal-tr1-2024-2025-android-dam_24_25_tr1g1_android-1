@@ -19,7 +19,7 @@ object ComandaManager {
     data class Contingut(
         val id: Int,
         val nom: String,
-        val preuTotal: Int,
+        val preuTotal: Float,
         val quantitat: Int
     )
 

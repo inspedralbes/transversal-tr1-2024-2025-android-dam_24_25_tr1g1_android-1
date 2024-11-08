@@ -18,6 +18,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
+import com.example.myapplication.SocketManager.connectSocket
 import com.example.myapplication.network.Producto
 import com.example.myapplication.ui.theme.MyApplicationTheme
 
@@ -29,6 +30,7 @@ class MainActivity : ComponentActivity() {
             MyApplicationTheme {
                 val navController = rememberNavController()
                 val cart = remember { mutableStateListOf<Producto>() }
+                connectSocket()
                 NavHost(navController = navController, startDestination = "menu") {
                     composable("menu") { MenuScreen(navController,cart) }
                     composable("cart") { CartScreen(navController, cart) }
