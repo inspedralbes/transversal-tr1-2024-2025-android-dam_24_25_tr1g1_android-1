@@ -55,13 +55,14 @@ data class Producto(
     val nom: String,
     val descripcio: String,
     val fotoRuta: String,
-    val preu: Int,
-    val oferta: Int,
+    val preu: Float,
+    val oferta: Float,
     var stock: Int,
     val category: Int,
-    val halal: Int ,
+    val halal: Int,
     val vegan: Int,
     val gluten: Int,
     val lactosa: Int,
-    val crustacis:Int
+    val crustacis:Int,
+    var quantity: Int=0
 ) : Parcelable

@@ -72,8 +72,8 @@ class CuinaActivity : ComponentActivity() {
         ComandaManager.ContingutAdd(
             it.key.id,
             it.key.nom,
-            it.key.preu * it.value, // calculando el precio total
-            it.value // asumiendo que `it.value` es la cantidad
+            it.key.preu * it.key.quantity, // calculando el precio total
+            it.key.quantity// asumiendo que `it.value` es la cantidad
         )
         }
         Log.i("Contingut", Gson().toJson(contingut))

@@ -13,12 +13,13 @@ import com.example.myapplication.network.Producto
 import com.google.gson.Gson
 
 class CarritoActivity : ComponentActivity() {
-    private val cart: MutableMap<Producto, Int> = CartManager.cart
+    private var cart: MutableMap<Producto, Int> = CartManager.cart
 
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.carrito)
             updateCartView()
+            Log.i("CarritoActivity started", cart.toString())
 
             // Referencias a las vistas
             val productContainer = findViewById<LinearLayout>(R.id.product_container)
@@ -26,11 +27,9 @@ class CarritoActivity : ComponentActivity() {
             val backButton = findViewById<Button>(R.id.tornar_menu)
             val checkoutButton = findViewById<Button>(R.id.checkout_button)
 
-            // Inicializa el carrito con los productos del Intent
-            val productsFromIntent = intent.getParcelableArrayListExtra<Producto>("cart") ?: mutableListOf()
-            for (product in productsFromIntent) {
-                addProductToCart(product)
-            }
+
+            // Guarda el carrito en las preferencias
+            updateCartView()
 
             // Muestra el total
             updateTotal()
@@ -57,54 +56,55 @@ class CarritoActivity : ComponentActivity() {
                 cart[product] = 1
             }
             saveCartToPreferences(this, cart)
+            Log.i("addProductToCart", "Product ${product.nom} added to cart")
             updateCartView()
             logCartContents()
         }
-        //Actualiza la vista del carrito.
-        private fun updateCartView() {
-            val productContainer = findViewById<LinearLayout>(R.id.product_container)
-            productContainer.removeAllViews()
+    //Actualiza la vista del carrito.
+    private fun updateCartView() {
+        val productContainer = findViewById<LinearLayout>(R.id.product_container)
+        productContainer.removeAllViews()
 
-            for ((product, quantity) in cart) {
-                val productView = layoutInflater.inflate(R.layout.carrito_item, productContainer, false)
-                val productName = productView.findViewById<TextView>(R.id.product_nom)
-                val productPrice = productView.findViewById<TextView>(R.id.product_price)
-                val addButton = productView.findViewById<Button>(R.id.add_button)
-                val subtractButton = productView.findViewById<Button>(R.id.subtract_button)
-                val productQuantity = productView.findViewById<TextView>(R.id.product_quantity)
+        for ((product) in cart) {
+            val productView = layoutInflater.inflate(R.layout.carrito_item, productContainer, false)
+            val productName = productView.findViewById<TextView>(R.id.product_nom)
+            val productPrice = productView.findViewById<TextView>(R.id.product_price)
+            val addButton = productView.findViewById<Button>(R.id.add_button)
+            val subtractButton = productView.findViewById<Button>(R.id.subtract_button)
+            val productQuantity = productView.findViewById<TextView>(R.id.product_quantity)
 
-                productName.text = product.nom
-                productPrice.text = "${product.preu * quantity} €"
-                productQuantity.text = quantity.toString()
+            productName.text = product.nom
+            productPrice.text = "${product.preu * product.quantity} €"
+            productQuantity.text = product.quantity.toString()
 
-                addButton.setOnClickListener {
-                    if (quantity <= product.stock) {
-                        CartManager.addProduct(product)
-                        saveCartToPreferences(this, cart)
-                        updateCartView()
-                        logCartContents()
-                    }
-                    else {
-                        Toast.makeText(this, "Producte ${product.nom} fora d'stock", Toast.LENGTH_SHORT).show()
-                    }
-                }
-
-                subtractButton.setOnClickListener {
-                    CartManager.removeProduct(product)
+            addButton.setOnClickListener {
+                if (product.quantity <= product.stock) {
+                    CartManager.addProduct(product)
                     saveCartToPreferences(this, cart)
                     updateCartView()
                     logCartContents()
                 }
-
-                productContainer.addView(productView)
+                else {
+                    Toast.makeText(this, "Producte ${product.nom} fora d'stock", Toast.LENGTH_SHORT).show()
+                }
             }
 
-            updateTotal()
+            subtractButton.setOnClickListener {
+                CartManager.removeProduct(product)
+                saveCartToPreferences(this, cart)
+                updateCartView()
+                logCartContents()
+            }
+
+            productContainer.addView(productView)
         }
+
+        updateTotal()
+    }
 
         private fun updateTotal() {
             val totalPriceText = findViewById<TextView>(R.id.total_price)
-            val total = cart.entries.sumBy { it.key.preu * it.value }
+            val total = CartManager.cart.entries.sumByDouble { (it.key.preu * it.key.quantity).toDouble() }.toFloat()
             totalPriceText.text = "$total € TOTAL"
         }
 

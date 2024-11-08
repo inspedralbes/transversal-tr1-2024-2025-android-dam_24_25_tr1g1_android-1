@@ -19,6 +19,11 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.example.myapplication.CarritoActivity
+import com.example.myapplication.CartManager
+import com.example.myapplication.R
+import com.example.myapplication.SocketManager
+import com.example.myapplication.UserActivity
 
 class MenuActivity : ComponentActivity() {
 
@@ -27,7 +32,7 @@ class MenuActivity : ComponentActivity() {
     private lateinit var userButton: ImageView
     private lateinit var exitButton: Button
     private lateinit var numberOfProducts: TextView
-    private val cart = MutableLiveData<MutableList<Producto>>(mutableListOf())
+    private var cart: MutableMap<Producto, Int> = CartManager.cart
 
     var socket= SocketManager.socket
 
@@ -38,12 +43,12 @@ class MenuActivity : ComponentActivity() {
 
     }
     fun showOrHideCartButton(){
-        println(cart.value)
-        if(cart.value?.size ?: 0 > 0){
+        println(cart)
+        if(cart.size > 0){
             cartButton.visibility = ImageView.VISIBLE
             numberOfProducts.visibility = TextView.VISIBLE
-            println("This is cart from the intent " +  cart.value)
-            numberOfProducts.text = cart.value?.size.toString()
+            println("This is cart from the intent " +  cart)
+            numberOfProducts.text = calculateNumberOfProducts(cart).toString()
         }
         else{
             cartButton.visibility = ImageView.GONE
@@ -55,11 +60,9 @@ class MenuActivity : ComponentActivity() {
         val cart: MutableMap<Producto, Int> = CartManager.cart
         println("This is cart from CartManager "+cart)
         if (cart.isNotEmpty()) {
-            this.cart.value = cart.keys.toMutableList()
+            this.cart = cart
         }
-        else{
-            this.cart.value = mutableListOf()
-        }
+        Log.i("Cart Menu", cart.toString())
         showOrHideCartButton()
 
         numberOfProducts.text = calculateNumberOfProducts(cart).toString()
@@ -67,7 +70,7 @@ class MenuActivity : ComponentActivity() {
     private fun calculateNumberOfProducts(cart:MutableMap<Producto, Int>): Int {
         var total = 0
         cart.forEach { product ->
-            total += product.value
+            total += product.key.quantity
         }
         return total
     }
@@ -95,7 +98,7 @@ class MenuActivity : ComponentActivity() {
 
         cartButton.setOnClickListener {
             val intent = Intent(this, CarritoActivity::class.java)
-            intent.putParcelableArrayListExtra("cart", ArrayList(cart.value))
+            intent.putParcelableArrayListExtra("cart", cart.keys.toMutableList() as ArrayList<Producto>)
             startActivity(intent)
 
         }
@@ -164,9 +167,9 @@ class MenuActivity : ComponentActivity() {
 
             addButton.setOnClickListener {
                 if(product.stock > 0){
-                    cart.value?.add(product)
+                    CartManager.addProduct(product)
                     product.stock -= 1
-                    cart.value = cart.value
+                    cart = CartManager.cart
                     showOrHideCartButton()
                 Toast.makeText(this, "${product.nom} afegit a la cistella", Toast.LENGTH_SHORT).show()
                     }
