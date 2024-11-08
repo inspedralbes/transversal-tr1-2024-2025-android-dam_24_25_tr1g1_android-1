@@ -19,7 +19,6 @@ class CarritoActivity : ComponentActivity() {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.carrito)
             updateCartView()
-            Log.i("CarritoActivity started", cart.toString())
 
             // Referencias a las vistas
             val productContainer = findViewById<LinearLayout>(R.id.product_container)

@@ -40,6 +40,14 @@
         android:layout_height="wrap_content"
         android:text="0 €"
         android:layout_marginTop="4dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="0 €"
+        android:layout_marginTop="4dp"
+        android:id="@+id/product_oferta"
+        android:textColor="@color/red"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="wrap_content"

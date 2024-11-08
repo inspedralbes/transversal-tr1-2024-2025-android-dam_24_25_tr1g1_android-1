@@ -24,10 +24,11 @@ import com.example.myapplication.CartManager
 import com.example.myapplication.R
 import com.example.myapplication.SocketManager
 import com.example.myapplication.UserActivity
+import com.example.myapplication.network.Categoria
 
 class MenuActivity : ComponentActivity() {
 
-    private lateinit var productsGrid: GridLayout
+
     private lateinit var cartButton: ImageView
     private lateinit var userButton: ImageView
     private lateinit var exitButton: Button
@@ -36,12 +37,13 @@ class MenuActivity : ComponentActivity() {
 
     var socket= SocketManager.socket
 
-    val changeProductesStatus = Emitter.Listener { args ->
+    val changeProductList = Emitter.Listener { args ->
 
         setupButtonListeners()
         loadProducts()
 
     }
+
     fun showOrHideCartButton(){
         println(cart)
         if(cart.size > 0){
@@ -78,13 +80,14 @@ class MenuActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.menu)
 
-        socket!!.on("productesUpdated", changeProductesStatus)
+        socket!!.on("productesUpdated", changeProductList)
 
-        productsGrid = findViewById(R.id.products_grid)
+
         cartButton = findViewById(R.id.cart_button)
         userButton = findViewById(R.id.user_button)
         exitButton = findViewById(R.id.exit_button)
         numberOfProducts = findViewById(R.id.numberOfProducts)
+
         setupButtonListeners()
         loadProducts()
 
@@ -119,7 +122,9 @@ class MenuActivity : ComponentActivity() {
             try {
                 val productList = apiService.getProductData()
 
-                displayProducts(productList)
+                val categoryList = apiService.getCategoryData()
+
+                displayProducts(productList, categoryList)
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -128,42 +133,59 @@ class MenuActivity : ComponentActivity() {
         }
     }
 
-    private fun displayProducts(productList: List<Producto>) {
-        productsGrid.removeAllViews()
+    @SuppressLint("SetTextI18n")
 
-        for (product in productList) {
-            val productView = layoutInflater.inflate(R.layout.product_item, null)
+    private fun displayProducts(productList: List<Producto>, categoryList: List<Categoria>) {
+        val mainLayout = findViewById<LinearLayout>(R.id.main_layout) // Assuming you have a LinearLayout with this id in menu.xml
 
-            val productName = productView.findViewById<TextView>(R.id.product_nom)
-            val productPrice = productView.findViewById<TextView>(R.id.product_price)
-            val productImage = productView.findViewById<ImageView>(R.id.product_image)
-            val addButton = productView.findViewById<Button>(R.id.add_button)
-            val productDesc = productView.findViewById<TextView>(R.id.product_desc)
+        for (category in categoryList) {
+            val categoryView = layoutInflater.inflate(R.layout.category_item, null)
+            val categoryName = categoryView.findViewById<TextView>(R.id.category_name)
+            categoryName.text = category.nom
 
+            val gridLayout = layoutInflater.inflate(R.layout.grid_layout, null) as GridLayout
+            if(findProductsOnCategory(category, productList)){
+            for (product in productList) {
+                if (product.category == category.id) {
+                    val productView = layoutInflater.inflate(R.layout.product_item, null)
 
-            productName.text = product.nom
-            if (product.oferta !=null) {
-                productPrice.text = "${product.preu}€"
-            }
-            else{
-                productPrice.text = "${product.oferta}€"
-            }
-            productImage.load(BASE_URL+ "/" + product.fotoRuta)
-            productImage.setOnClickListener {
-                productImage.visibility = ImageView.GONE
-                productDesc.visibility = TextView.VISIBLE
-            }
-            productDesc.text=product.descripcio
-            productView.setOnClickListener {
-                productImage.visibility = TextView.VISIBLE
-                productDesc.visibility = ImageView.GONE
-            }
+                    val productName = productView.findViewById<TextView>(R.id.product_nom)
+                    val productPrice = productView.findViewById<TextView>(R.id.product_price)
+                    val productImage = productView.findViewById<ImageView>(R.id.product_image)
+                    val addButton = productView.findViewById<Button>(R.id.add_button)
+                    val productDesc = productView.findViewById<TextView>(R.id.product_desc)
+                    val productOferta = productView.findViewById<TextView>(R.id.product_oferta)
 
-            if (product.halal == 1) productView.findViewById<ImageView>(R.id.halal_icon).visibility = ImageView.VISIBLE
-            if (product.vegan == 1) productView.findViewById<ImageView>(R.id.vegan_icon).visibility = ImageView.VISIBLE
-            if (product.gluten == 1) productView.findViewById<ImageView>(R.id.gluten_icon).visibility = ImageView.VISIBLE
-            if (product.lactosa == 1) productView.findViewById<ImageView>(R.id.lactosa_icon).visibility = ImageView.VISIBLE
-            if (product.crustacis == 1) productView.findViewById<ImageView>(R.id.crustacis_icon).visibility = ImageView.VISIBLE
+                    productName.text = product.nom
+                    if (product.oferta == 0.toFloat()) {
+                        productPrice.text = "${product.preu}€"
+                        productOferta.text = ""
+                    } else {
+                        productPrice.text = "${product.preu}€"
+                        productPrice.setPaintFlags(productPrice.getPaintFlags() or android.graphics.Paint.STRIKE_THRU_TEXT_FLAG)
+                        productOferta.text = "${product.oferta}€"
+                        productOferta.visibility = TextView.VISIBLE
+                    }
+                    if (product.stock == 0) {
+                        addButton.isEnabled = false
+                        addButton.text = "Esgotat"
+                    }
+                    productImage.load(BASE_URL + "/" + product.fotoRuta)
+                    productImage.setOnClickListener {
+                        productImage.visibility = ImageView.GONE
+                        productDesc.visibility = TextView.VISIBLE
+                    }
+                    productDesc.text = product.descripcio
+                    productView.setOnClickListener {
+                        productImage.visibility = TextView.VISIBLE
+                        productDesc.visibility = ImageView.GONE
+                    }
+
+                    if (product.halal == 1) productView.findViewById<ImageView>(R.id.halal_icon).visibility = ImageView.VISIBLE
+                    if (product.vegan == 1) productView.findViewById<ImageView>(R.id.vegan_icon).visibility = ImageView.VISIBLE
+                    if (product.gluten == 1) productView.findViewById<ImageView>(R.id.gluten_icon).visibility = ImageView.VISIBLE
+                    if (product.lactosa == 1) productView.findViewById<ImageView>(R.id.lactosa_icon).visibility = ImageView.VISIBLE
+                    if (product.crustacis == 1) productView.findViewById<ImageView>(R.id.crustacis_icon).visibility = ImageView.VISIBLE
 
             addButton.setOnClickListener {
                 if(product.stock > 0){
@@ -178,8 +200,19 @@ class MenuActivity : ComponentActivity() {
                 }
             }
 
+                    gridLayout.addView(productView)
+                }
+            }
 
-            productsGrid.addView(productView)
+            mainLayout.addView(categoryView)
+            mainLayout.addView(gridLayout)
+            }
         }
     }
+
+    fun findProductsOnCategory(category: Categoria, productList: List<Producto>): Boolean{
+        val found = productList.find { it.category == category.id }
+        return found != null
+    }
+
 }

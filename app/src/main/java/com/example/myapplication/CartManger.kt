@@ -26,10 +26,7 @@ object CartManager {
             product.quantity=1
             cart[product] = 1
         }
-        println("TERMINAMOS DE AÑADIR PRODUCTO")
-        println(cart)
     }
-
 
     fun removeProduct(product: Producto) {
 
