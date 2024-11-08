@@ -64,6 +64,6 @@ object CartManager {
     }
 
     fun getTotalPrice(): Float {
-        return cart.entries.sumByDouble { (it.key.preu * it.value).toDouble() }.toFloat()
+        return cart.entries.sumByDouble { (it.key.preu * it.key.quantity).toDouble() }.toFloat()
     }
 }
