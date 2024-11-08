@@ -32,8 +32,6 @@ interface Interface {
     //PUT UPDATE estat de la comanda
     @PUT("/delComan/{Id}")
     suspend fun deleteConmanda(@Path("Id") id: String)
-    @PUT("/stockProd/{Id}")
-    suspend fun updateStockProd(@Path("Id") id: String, @Body stock: Map<String, Int>)
 
     @POST("/addUser")
     suspend fun registerUser(

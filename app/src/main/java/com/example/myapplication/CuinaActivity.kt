@@ -31,7 +31,6 @@ class CuinaActivity : ComponentActivity() {
         // Agrega una nueva comanda y actualiza el texto de confirmación
         addComanda { comanId ->
             textConfirmation.text = "ORDRE #$comanId REBUDA A CUINA!"
-            updateStockForCartItems()
         }
 
         //Si no se puede enviar la comanda, muestra un mensaje de error
@@ -61,7 +60,8 @@ class CuinaActivity : ComponentActivity() {
                 callback(comanId)
             } catch (e: Exception) {
                 e.printStackTrace()
-                Toast.makeText(this@CuinaActivity, "Error al enviar la comanda", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@CuinaActivity, "Error al enviar la comanda", Toast.LENGTH_LONG)
+                    .show()
             }
         }
     }
@@ -69,41 +69,23 @@ class CuinaActivity : ComponentActivity() {
     //Crea una comanda con los productos del carrito
     private fun createComanda(): ComandaManager.ComandaAdd {
         val contingut = cart.map {
-        ComandaManager.ContingutAdd(
-            it.key.id,
-            it.key.nom,
-            it.key.preu * it.key.quantity, // calculando el precio total
-            it.key.quantity// asumiendo que `it.value` es la cantidad
-        )
+            ComandaManager.ContingutAdd(
+                it.key.id,
+                it.key.nom,
+                it.key.preu * it.key.quantity, // calculando el precio total
+                it.key.quantity// asumiendo que `it.value` es la cantidad
+            )
         }
         Log.i("Contingut", Gson().toJson(contingut))
         return ComandaManager.ComandaAdd(
             id = 0,
             client = user!!.id,
             contingut = contingut,
-            preuComanda = cart.entries.sumByDouble { (it.key.preu * it.value).toDouble() }.toFloat(),
+            preuComanda = cart.entries.sumByDouble { (it.key.preu * it.value).toDouble() }
+                .toFloat(),
             estat = "",
             data = "",
             cancel = 0
         )
-    }
-    private fun updateStockForCartItems() {
-        Log.i("Stock", "Presiento que me engañas")
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        val apiService = retrofit.create(Interface::class.java)
-        CoroutineScope(Dispatchers.Main).launch {
-            try {
-                cart.forEach { (producto, cantidad) ->
-                    apiService.updateStockProd(producto.id.toString(), mapOf("stock" to cantidad)) }
-                CartManager.clearCart()
-                Log.i("Stock", "Stock actualizado")
-            } catch (e: Exception) {
-                e.printStackTrace()
-                Toast.makeText(this@CuinaActivity, "Error al actualizar el stock", Toast.LENGTH_LONG).show()
-            }
-        }
     }
 }
