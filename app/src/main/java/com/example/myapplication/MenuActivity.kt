@@ -33,12 +33,13 @@ class MenuActivity : ComponentActivity() {
 
     var socket= SocketManager.socket
 
-    val changeProductesStatus = Emitter.Listener { args ->
+    val changeProductList = Emitter.Listener { args ->
 
         setupButtonListeners()
         loadProducts()
 
     }
+
     fun showOrHideCartButton(){
         println(cart.value)
         if(cart.value?.size ?: 0 > 0){
@@ -77,7 +78,7 @@ class MenuActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.menu)
 
-        socket!!.on("productesUpdated", changeProductesStatus)
+        socket!!.on("productesUpdated", changeProductList)
 
 
         cartButton = findViewById(R.id.cart_button)
