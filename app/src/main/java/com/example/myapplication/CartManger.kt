@@ -27,7 +27,7 @@ object CartManager {
         cart.clear()
     }
 
-    fun getTotalPrice(): Int {
-        return cart.entries.sumBy { it.key.preu * it.value }
+    fun getTotalPrice(): Double {
+        return cart.entries.sumOf { it.key.preu.toDouble() * it.value }
     }
 }

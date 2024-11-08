@@ -72,7 +72,7 @@ class CuinaActivity : ComponentActivity() {
         ComandaManager.ContingutAdd(
             it.key.id,
             it.key.nom,
-            it.key.preu * it.value, // calculando el precio total
+            it.key.preu.toDouble() * it.value, // calculando el precio total
             it.value // asumiendo que `it.value` es la cantidad
         )
         }

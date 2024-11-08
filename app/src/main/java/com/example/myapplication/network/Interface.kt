@@ -16,6 +16,8 @@ interface Interface {
     //GET tots els productes
     @GET("/getProd")
     suspend fun getProductData(): List<Producto>
+    @GET("/getCat")
+    suspend fun getCategoryData(): List<Categoria>
     //GET productes per client
     @GET("/getComanClient/{userId}")
     suspend fun getComanData(@Path("userId") userId: String): List<ComandaManager.Comanda>
@@ -50,13 +52,19 @@ interface Interface {
     ): List<User>
 }
 @Parcelize
+data class Categoria (
+    val id: Int = 0,
+    val nom: String = ""
+) : Parcelable
+
+@Parcelize
 data class Producto(
     val id: Int,
     val nom: String,
     val descripcio: String,
     val fotoRuta: String,
-    val preu: Int,
-    val oferta: Int,
+    val preu: Float,
+    val oferta: Float,
     var stock: Int,
     val category: Int,
     val halal: Int ,

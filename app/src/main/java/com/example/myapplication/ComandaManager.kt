@@ -36,7 +36,7 @@ object ComandaManager {
     data class ContingutAdd(
         val id: Int,
         val nom: String,
-        val preuTotal: Int,
+        val preuTotal: Double,
         val quantitat: Int
     )
 }

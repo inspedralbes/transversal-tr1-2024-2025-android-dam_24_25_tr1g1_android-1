@@ -104,7 +104,7 @@ class CarritoActivity : ComponentActivity() {
 
         private fun updateTotal() {
             val totalPriceText = findViewById<TextView>(R.id.total_price)
-            val total = cart.entries.sumBy { it.key.preu * it.value }
+            val total = cart.entries.sumOf { it.key.preu.toDouble() * it.value }
             totalPriceText.text = "$total € TOTAL"
         }
 

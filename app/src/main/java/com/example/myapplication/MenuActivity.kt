@@ -19,14 +19,16 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.example.myapplication.network.Categoria
 
 class MenuActivity : ComponentActivity() {
 
-    private lateinit var productsGrid: GridLayout
+
     private lateinit var cartButton: ImageView
     private lateinit var userButton: ImageView
     private lateinit var exitButton: Button
     private lateinit var numberOfProducts: TextView
+
     private val cart = MutableLiveData<MutableList<Producto>>(mutableListOf())
 
     var socket= SocketManager.socket
@@ -77,11 +79,12 @@ class MenuActivity : ComponentActivity() {
 
         socket!!.on("productesUpdated", changeProductesStatus)
 
-        productsGrid = findViewById(R.id.products_grid)
+
         cartButton = findViewById(R.id.cart_button)
         userButton = findViewById(R.id.user_button)
         exitButton = findViewById(R.id.exit_button)
         numberOfProducts = findViewById(R.id.numberOfProducts)
+
         setupButtonListeners()
         loadProducts()
 
@@ -116,7 +119,9 @@ class MenuActivity : ComponentActivity() {
             try {
                 val productList = apiService.getProductData()
 
-                displayProducts(productList)
+                val categoryList = apiService.getCategoryData()
+
+                displayProducts(productList, categoryList)
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -125,58 +130,80 @@ class MenuActivity : ComponentActivity() {
         }
     }
 
-    private fun displayProducts(productList: List<Producto>) {
-        productsGrid.removeAllViews()
+    @SuppressLint("SetTextI18n")
 
-        for (product in productList) {
-            val productView = layoutInflater.inflate(R.layout.product_item, null)
+    private fun displayProducts(productList: List<Producto>, categoryList: List<Categoria>) {
+        val mainLayout = findViewById<LinearLayout>(R.id.main_layout) // Assuming you have a LinearLayout with this id in menu.xml
 
-            val productName = productView.findViewById<TextView>(R.id.product_nom)
-            val productPrice = productView.findViewById<TextView>(R.id.product_price)
-            val productImage = productView.findViewById<ImageView>(R.id.product_image)
-            val addButton = productView.findViewById<Button>(R.id.add_button)
-            val productDesc = productView.findViewById<TextView>(R.id.product_desc)
+        for (category in categoryList) {
+            val categoryView = layoutInflater.inflate(R.layout.category_item, null)
+            val categoryName = categoryView.findViewById<TextView>(R.id.category_name)
+            categoryName.text = category.nom
 
+            val gridLayout = layoutInflater.inflate(R.layout.grid_layout, null) as GridLayout
 
-            productName.text = product.nom
-            if (product.oferta !=null) {
-                productPrice.text = "${product.preu}€"
-            }
-            else{
-                productPrice.text = "${product.oferta}€"
-            }
-            productImage.load(BASE_URL+ "/" + product.fotoRuta)
-            productImage.setOnClickListener {
-                productImage.visibility = ImageView.GONE
-                productDesc.visibility = TextView.VISIBLE
-            }
-            productDesc.text=product.descripcio
-            productView.setOnClickListener {
-                productImage.visibility = TextView.VISIBLE
-                productDesc.visibility = ImageView.GONE
-            }
+            for (product in productList) {
+                if (product.category == category.id) {
+                    val productView = layoutInflater.inflate(R.layout.product_item, null)
 
-            if (product.halal == 1) productView.findViewById<ImageView>(R.id.halal_icon).visibility = ImageView.VISIBLE
-            if (product.vegan == 1) productView.findViewById<ImageView>(R.id.vegan_icon).visibility = ImageView.VISIBLE
-            if (product.gluten == 1) productView.findViewById<ImageView>(R.id.gluten_icon).visibility = ImageView.VISIBLE
-            if (product.lactosa == 1) productView.findViewById<ImageView>(R.id.lactosa_icon).visibility = ImageView.VISIBLE
-            if (product.crustacis == 1) productView.findViewById<ImageView>(R.id.crustacis_icon).visibility = ImageView.VISIBLE
+                    val productName = productView.findViewById<TextView>(R.id.product_nom)
+                    val productPrice = productView.findViewById<TextView>(R.id.product_price)
+                    val productImage = productView.findViewById<ImageView>(R.id.product_image)
+                    val addButton = productView.findViewById<Button>(R.id.add_button)
+                    val productDesc = productView.findViewById<TextView>(R.id.product_desc)
+                    val productOferta = productView.findViewById<TextView>(R.id.product_oferta)
 
-            addButton.setOnClickListener {
-                if(product.stock > 0){
-                    cart.value?.add(product)
-                    product.stock -= 1
-                    cart.value = cart.value
-                    showOrHideCartButton()
-                Toast.makeText(this, "${product.nom} afegit a la cistella", Toast.LENGTH_SHORT).show()
+                    productName.text = product.nom
+                    if (product.oferta == 0.toFloat()) {
+                        productPrice.text = "${product.preu}€"
+                        productOferta.text = ""
+                    } else {
+                        productPrice.text = "${product.preu}€"
+                        productPrice.setPaintFlags(productPrice.getPaintFlags() or android.graphics.Paint.STRIKE_THRU_TEXT_FLAG)
+                        productOferta.text = "${product.oferta}€"
+                        productOferta.visibility = TextView.VISIBLE
                     }
-                else{
-                    Toast.makeText(this, "Producte ${product.nom} en falta de stock", Toast.LENGTH_SHORT).show()
+                    if (product.stock == 0) {
+                        addButton.isEnabled = false
+                        addButton.text = "Esgotat"
+                    }
+                    productImage.load(BASE_URL + "/" + product.fotoRuta)
+                    productImage.setOnClickListener {
+                        productImage.visibility = ImageView.GONE
+                        productDesc.visibility = TextView.VISIBLE
+                    }
+                    productDesc.text = product.descripcio
+                    productView.setOnClickListener {
+                        productImage.visibility = TextView.VISIBLE
+                        productDesc.visibility = ImageView.GONE
+                    }
+
+                    if (product.halal == 1) productView.findViewById<ImageView>(R.id.halal_icon).visibility = ImageView.VISIBLE
+                    if (product.vegan == 1) productView.findViewById<ImageView>(R.id.vegan_icon).visibility = ImageView.VISIBLE
+                    if (product.gluten == 1) productView.findViewById<ImageView>(R.id.gluten_icon).visibility = ImageView.VISIBLE
+                    if (product.lactosa == 1) productView.findViewById<ImageView>(R.id.lactosa_icon).visibility = ImageView.VISIBLE
+                    if (product.crustacis == 1) productView.findViewById<ImageView>(R.id.crustacis_icon).visibility = ImageView.VISIBLE
+
+                    addButton.setOnClickListener {
+                        if (product.stock > 0) {
+                            cart.value?.add(product)
+                            product.stock -= 1
+                            cart.value = cart.value
+                            showOrHideCartButton()
+                            Toast.makeText(this, "${product.nom} afegit a la cistella", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(this, "Producte ${product.nom} en falta de stock", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    gridLayout.addView(productView)
                 }
             }
 
-
-            productsGrid.addView(productView)
+            mainLayout.addView(categoryView)
+            mainLayout.addView(gridLayout)
         }
     }
+
+
 }
