@@ -42,9 +42,15 @@ class CarritoActivity : ComponentActivity() {
 
             // Botón para proceder al pago
             checkoutButton.setOnClickListener {
-                val intent = Intent(this, PagoActivity::class.java)
-                startActivity(intent)
-                finish()
+                if(cart.isEmpty()) {
+                    Toast.makeText(this, "No hi ha productes a la cesta", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                else {
+                    val intent = Intent(this, PagoActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
             }
         }
 

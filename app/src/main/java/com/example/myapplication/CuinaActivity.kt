@@ -82,8 +82,7 @@ class CuinaActivity : ComponentActivity() {
             id = 0,
             client = user!!.id,
             contingut = contingut,
-            preuComanda = cart.entries.sumByDouble { (it.key.preu * it.value).toDouble() }
-                .toFloat(),
+            preuComanda = cart.entries.sumByDouble { (it.key.preu * it.key.quantity).toDouble() }.toFloat(),
             estat = "",
             data = "",
             cancel = 0
