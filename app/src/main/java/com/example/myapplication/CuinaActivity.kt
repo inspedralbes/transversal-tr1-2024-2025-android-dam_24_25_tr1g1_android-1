@@ -12,6 +12,7 @@ import com.example.myapplication.CartManager.cart
 import com.example.myapplication.UserManager.user
 import com.example.myapplication.network.BASE_URL
 import com.example.myapplication.network.Interface
+import com.example.myapplication.network.Producto
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -73,7 +74,7 @@ class CuinaActivity : ComponentActivity() {
             ComandaManager.ContingutAdd(
                 it.key.id,
                 it.key.nom,
-                getPreuTotal(), // calculando el precio total
+                getPreuTotal(it), // calculando el precio total
                 it.key.quantity// asumiendo que `it.value` es la cantidad
             )
         }
@@ -89,7 +90,14 @@ class CuinaActivity : ComponentActivity() {
             cancel = 0
         )
     }
-    private fun getPreuTotal(): Float {
-        return cart.entries.sumByDouble { ((if (it.key.oferta != null && it.key.oferta != 0.0F) it.key.oferta else it.key.preu) * it.key.quantity).toDouble() }.toFloat()
+    private fun getPreuTotal(it: Map.Entry<Producto, Int>): Float {
+        var preu: Float
+        if(it.key.oferta != null && it.key.oferta != 0.0F){
+            preu = it.key.oferta * it.key.quantity.toDouble().toFloat()
+        }
+        else{
+            preu = it.key.preu * it.key.quantity.toDouble().toFloat().toFloat()
+        }
+        return preu
     }
 }

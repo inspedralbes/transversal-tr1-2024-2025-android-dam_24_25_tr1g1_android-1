@@ -108,6 +108,7 @@ class MenuActivity : ComponentActivity() {
 
         exitButton.setOnClickListener {
             finishAffinity()
+            cart.clear()
         }
     }
 
