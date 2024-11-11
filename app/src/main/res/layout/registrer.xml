@@ -104,7 +104,7 @@
                     android:id="@+id/allergen1_image"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/crustacio"
+                    android:src="@drawable/crustaceo"
                     android:background="@drawable/image_selector" />
 
                 <ToggleButton

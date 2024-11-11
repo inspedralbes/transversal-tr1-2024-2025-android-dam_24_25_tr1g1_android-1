@@ -35,11 +35,6 @@
                 android:layout_weight="1"
                 android:gravity="center" />
 
-            <ImageView
-                android:id="@+id/user_button"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/perfil" />
         </LinearLayout>
 
         <TextView

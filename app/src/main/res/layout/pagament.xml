@@ -23,11 +23,11 @@
                 android:id="@+id/back_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Enrere"
-                android:textColor="#000000"
-                android:backgroundTint="#F5F5F5"
                 android:layout_weight="1"
-                android:padding="8dp"/>
+                android:backgroundTint="#FF9800"
+                android:padding="8dp"
+                android:text="Enrere"
+                android:textColor="#FFFFFF" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -40,13 +40,6 @@
                 android:gravity="center"
                 android:textColor="#000000" />
 
-            <ImageView
-                android:id="@+id/user_button"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/perfil"
-                android:layout_weight="1"
-                android:layout_gravity="end"/>
         </LinearLayout>
 
         <TextView
@@ -128,10 +121,10 @@
             android:id="@+id/pay_now_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pagar ara"
-            android:backgroundTint="#8B4513"
-            android:textColor="#FFFFFF"
+            android:backgroundTint="#FF9800"
             android:padding="16dp"
-            android:textSize="18sp"/>
+            android:text="Pagar ara"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
     </LinearLayout>
 </ScrollView>
