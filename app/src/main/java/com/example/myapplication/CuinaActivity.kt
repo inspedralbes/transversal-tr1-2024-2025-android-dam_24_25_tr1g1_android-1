@@ -73,7 +73,7 @@ class CuinaActivity : ComponentActivity() {
             ComandaManager.ContingutAdd(
                 it.key.id,
                 it.key.nom,
-                it.key.preu * it.key.quantity, // calculando el precio total
+                getPreuTotal(), // calculando el precio total
                 it.key.quantity// asumiendo que `it.value` es la cantidad
             )
         }
@@ -82,10 +82,14 @@ class CuinaActivity : ComponentActivity() {
             id = 0,
             client = user!!.id,
             contingut = contingut,
-            preuComanda = cart.entries.sumByDouble { (it.key.preu * it.key.quantity).toDouble() }.toFloat(),
-            estat = "",
+            preuComanda = cart.entries.sumByDouble { ((if (it.key.oferta != null && it.key.oferta != 0.0F) it.key.oferta else it.key.preu) * it.key.quantity).toDouble() }.toFloat(),
+
+    estat = "",
             data = "",
             cancel = 0
         )
+    }
+    private fun getPreuTotal(): Float {
+        return cart.entries.sumByDouble { ((if (it.key.oferta != null && it.key.oferta != 0.0F) it.key.oferta else it.key.preu) * it.key.quantity).toDouble() }.toFloat()
     }
 }

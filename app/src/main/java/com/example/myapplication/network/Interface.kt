@@ -10,7 +10,7 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 
-val BASE_URL = "http://pregrillgrab.dam.inspedralbes.cat:26968"
+val BASE_URL = "http://grillgrab.dam.inspedralbes.cat:26968"
 
 interface Interface {
     //GET tots els productes

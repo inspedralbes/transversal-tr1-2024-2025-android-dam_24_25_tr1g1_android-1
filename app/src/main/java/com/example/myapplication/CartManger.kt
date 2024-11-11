@@ -39,9 +39,6 @@ object CartManager {
 
             if(it.id == product.id){
                 found=true
-                println("ESTA EN EL IF")
-                println("ESTE ES MI IT"+it )
-                println("este es el cart"+cart[product])
                 it.quantity-=1
 
             }
@@ -64,6 +61,5 @@ object CartManager {
     }
 
     fun getTotalPrice(): Float {
-        return cart.entries.sumByDouble { (it.key.preu * it.key.quantity).toDouble() }.toFloat()
+        return cart.entries.sumByDouble { ((if (it.key.oferta != null && it.key.oferta != 0.0F) it.key.oferta else it.key.preu) * it.key.quantity).toDouble() }.toFloat()    }
     }
-}

@@ -137,6 +137,7 @@ class MenuActivity : ComponentActivity() {
 
     private fun displayProducts(productList: List<Producto>, categoryList: List<Categoria>) {
         val mainLayout = findViewById<LinearLayout>(R.id.main_layout) // Assuming you have a LinearLayout with this id in menu.xml
+        mainLayout.removeAllViews()
 
         for (category in categoryList) {
             val categoryView = layoutInflater.inflate(R.layout.category_item, null)
@@ -160,6 +161,7 @@ class MenuActivity : ComponentActivity() {
                     if (product.oferta == 0.toFloat()) {
                         productPrice.text = "${product.preu}€"
                         productOferta.text = ""
+                        productOferta.visibility = TextView.INVISIBLE
                     } else {
                         productPrice.text = "${product.preu}€"
                         productPrice.setPaintFlags(productPrice.getPaintFlags() or android.graphics.Paint.STRIKE_THRU_TEXT_FLAG)

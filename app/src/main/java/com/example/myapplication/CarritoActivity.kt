@@ -79,7 +79,11 @@ class CarritoActivity : ComponentActivity() {
             val productQuantity = productView.findViewById<TextView>(R.id.product_quantity)
 
             productName.text = product.nom
-            productPrice.text = "${product.preu * product.quantity} €"
+            if(product.oferta != null && product.oferta != 0.0F) {
+                productPrice.text = "${product.oferta * product.quantity} €"
+            } else {
+                productPrice.text = "${product.preu * product.quantity} €"
+            }
             productQuantity.text = product.quantity.toString()
 
             addButton.setOnClickListener {
@@ -109,7 +113,7 @@ class CarritoActivity : ComponentActivity() {
 
         private fun updateTotal() {
             val totalPriceText = findViewById<TextView>(R.id.total_price)
-            val total = CartManager.cart.entries.sumByDouble { (it.key.preu * it.key.quantity).toDouble() }.toFloat()
+            val total = CartManager.cart.entries.sumByDouble { ((if (it.key.oferta != null && it.key.oferta != 0.0F) it.key.oferta else it.key.preu) * it.key.quantity).toDouble() }.toFloat()
             totalPriceText.text = "$total € TOTAL"
         }
 

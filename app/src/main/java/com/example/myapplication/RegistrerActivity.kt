@@ -44,7 +44,7 @@ class RegisterActivity : ComponentActivity() {
                 return@setOnClickListener
             } else {
                     val retrofit = Retrofit.Builder()
-                        .baseUrl("http://pregrillgrab.dam.inspedralbes.cat:26968")
+                        .baseUrl("http://grillgrab.dam.inspedralbes.cat:26968")
                         .addConverterFactory(GsonConverterFactory.create())
                         .build()
                     val apiService = retrofit.create(Interface::class.java)
